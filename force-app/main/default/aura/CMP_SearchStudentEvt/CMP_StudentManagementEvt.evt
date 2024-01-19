@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="students" type="Student__c[]"/>
+    <aura:attribute name="isReload" type="Boolean"/>
+</aura:event>

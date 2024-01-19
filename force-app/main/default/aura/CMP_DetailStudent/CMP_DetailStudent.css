@@ -1,0 +1,19 @@
+.THIS .col-40{
+    width: 40%;
+    padding: 8px;
+}
+
+.THIS .col-60{
+    max-width: 100px;
+    word-wrap: break-word;
+    width: 60%;
+    padding: 8px;
+}
+
+.THIS #custom-Modal{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.THIS .tableDetail td{
+    text-align: center;
+}

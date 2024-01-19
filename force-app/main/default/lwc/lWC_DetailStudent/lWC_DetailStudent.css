@@ -1,0 +1,20 @@
+.modal{
+    width: 70%;
+    margin-left: 15%;
+}
+
+.col-40{
+    width: 40%;
+    padding: 8px;
+}
+
+.col-60{
+    max-width: 100px;
+    width: 60%;
+    padding: 8px;
+    word-wrap: break-word;
+}
+
+.tableDetail td{
+    text-align: center;
+}

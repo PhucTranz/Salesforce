@@ -1,0 +1,14 @@
+<aura:component controller="CMP_SearchStudentCtrl" implements="flexipage:availableForAllPageTypes">
+    <aura:dependency resource="markup://force:showToast" type="EVENT,COMPONENT" />  
+    <div class="slds-box slds-theme_default">
+        <div class="slds-text-heading_large slds-text-align_center"><a href="/lightning/n/CMP_SearchStudent">Student Management</a></div>
+        <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+            <div class="slds-col">
+                <div class="slds-grid slds-wrap" id="searchArea">
+                    <c:CMP_SearchCondition aura:id="searchCondition"/>
+                </div> 
+                <c:CMP_SearchResults aura:id="searchResults"/>
+            </div>
+        </div>
+    </div>
+</aura:component>	

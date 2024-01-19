@@ -1,0 +1,482 @@
+<apex:page controller="VF_SearchStudentCtrl" lightningStylesheets="True" docType="html-5.0">
+    <html>
+    <head>
+        <title>Students</title>
+        <apex:stylesheet value="{!URLFOR($Resource.Stylesheet, '/bootstrap-5.3.2-dist/css/bootstrap.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.VF_Search, '/VF_Search/VF_search_CSS.css')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.Stylesheet, '/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js')}"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"/>
+        <apex:includeScript value="{!URLFOR($Resource.VF_Search, '/VF_Search/VF_search_JS.js')}"/>
+    </head>
+    <body>
+        <div class="container mt-3">
+            <h2 id="home">List Student</h2>
+            <apex:form id="searchForm">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col col-text">
+                            <li>Student Code</li>
+                            <li><apex:inputText styleClass="searchInput" value="{!searchByStudentCode}"/></li>
+                        </div>
+                        <div class="col col-text">
+                            <li>Student Name</li>
+                            <li><apex:inputText styleClass="searchInput" value="{!searchByName}"/></li>
+                        </div>
+                        <div class="col col-text">
+                            <li>Gender</li>
+                            <li>
+                                <apex:selectList styleClass="searchInput" value="{!searchByGender}" size="1">
+                                    <apex:selectOptions value="{!genderOptions}" />
+                                </apex:selectList>
+                            </li>
+                        </div>
+                        <div class="col col-text">
+                            <li>Class</li>
+                            <li>
+                                <apex:selectList styleClass="searchInput" value="{!searchByClass}" size="1">
+                                    <apex:selectOptions value="{!options}" />
+                                </apex:selectList>
+                            </li>
+                        </div>
+                        <div class="col col-text">
+                            <li>BirthDay</li>
+                            <li><apex:input id="searchBirthDay" styleClass="searchInput" type="date" value="{!searchByBirthday}"/></li>
+                        </div>
+                        <div class="col col-text">
+                            <li>Day of Birth</li>
+                            <li>
+                                <select id="searchDay" class="searchInput"></select>
+                                <apex:inputText styleClass="inputHidden" value="{!searchByDay}" id="searchByDay"/>
+                            </li>
+                        </div>
+                        <div class="col col-text">
+                            <li>Month of Birth</li>
+                            <li>
+                                <select id="searchMonth" class="searchInput"></select>
+                                <apex:inputText styleClass="inputHidden" value="{!searchByMonth}" id="searchByMonth"/>
+                            </li>
+                        </div>
+                        <div class="col col-text">
+                            <li>Year of Birth</li>
+                            <li>
+                                <select id="searchYear" class="searchInput"></select>
+                                <apex:inputText styleClass="inputHidden" value="{!searchByYear}" id="searchByYear"/>
+                            </li>
+                        </div>
+                        <div class="col col-text">
+                            <li>&nbsp;</li>
+                            <li><apex:commandButton value="Search" action="{!search}" reRender="tableForm, footerTable" oncomplete="checkChecked()"/></li>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <apex:form id="tableForm">
+                <div class="container">
+                    <div class="row">
+                        <apex:commandButton value="Add Student" action="{!setStudent}" reRender="addForm" onclick="showModal('addModal')" styleClass="addBtn btnC">
+                            <apex:param name="student" value="" assignTo="{!studentId}" />
+                        </apex:commandButton>
+                        <apex:commandButton value="Select All" oncomplete="checkChecked()" reRender="tableForm, footerTable, deleteSelectedModal" action="{!selectAllStudent}" styleClass="btnC btnSelectAll"/>
+                        <apex:commandButton value="Clear" oncomplete="checkChecked()" reRender="tableForm, footerTable, deleteSelectedModal" action="{!clearSelectedStudent}" styleClass="btnClear btnC"/>
+                        <apex:commandButton value="Delete" reRender="tableForm, footerTable" onclick="showModal('confirmModal')" styleClass="btnDelete btnC"/>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr >
+                            <th></th>
+                            <th>#</th>
+                            <th>Student Code</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Class</th>
+                            <th>BirthDay</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:variable var="count" value="{!IF(pageNumber == 1, 0, (pageNumber-1)*pageSize)}" />
+                        <apex:repeat value="{!students}" var="student">
+                        <tr>
+                            <apex:variable var="count" value="{!count + 1}"/>
+                            <td>
+                                <apex:inputCheckbox value="{!selectedStudent[student.StudentCode__c]}" styleClass="checkboxes">
+                                    <apex:actionSupport event="onclick" action="{!selectStudent}" reRender="tableForm, footerTable, deleteSelectedModal" oncomplete="checkChecked()">
+                                        <apex:param name="student" value="{!student.StudentCode__c}" assignTo="{!studentCode}" />
+                                    </apex:actionSupport>
+                                </apex:inputCheckbox>
+                                
+                            </td>
+                            <td>{!count}</td>
+                            <td>{!student.StudentCode__c}</td>
+                            <td>{!IF(LEN(student.Name) > 30, LEFT(student.Name, 30)+'...', student.Name) }</td>
+                            <td>{!IF(student.Gender__c, 'Male', 'Female')}</td>
+                            <td>{!student.Class__r.Name}</td>
+                            <td>                                        
+                                <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                    <apex:param value="{!student.BirthDay__c}" />
+                                </apex:outputText></td>
+                            <td>
+                                <apex:commandButton value="Detail" action="{!setStudent}" reRender="studentInfor" oncomplete="showModal('DetailModal')">
+                                    <apex:param name="student" value="{!student.Id}" assignTo="{!studentId}" />
+                                </apex:commandButton>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <apex:commandButton value="Edit" action="{!setStudent}" reRender="updateForm" oncomplete="showModal('updateModal')">
+                                    <apex:param name="student" value="{!student.Id}" assignTo="{!studentId}" />
+                                </apex:commandButton>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <apex:commandButton value="Delete" action="{!setStudent}" reRender="delStudent" oncomplete="showModal('deleteModal')">
+                                    <apex:param name="student" value="{!student.Id}" assignTo="{!studentId}" />
+                                </apex:commandButton>
+                            </td>
+                        </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </apex:form>
+            <apex:form id="footerTable">
+                <div class="container">
+                    <div class="row" id="numOfSelected">Selected 0 of {!totalRecords} students</div><br></br>
+                    <p id="numOfRecords" hidden="true">{!totalRecords}</p>
+                    <p id="countSelected" hidden="true">{!countSelected}</p>
+                    <div class="row justify-content-md-center">
+                        <div class="col-auto">
+                            <apex:commandButton value="<<" action="{!getFirstPage}" reRender="tableForm, footerTable" disabled="{!IF(hasPreviousPage == false, 'true', 'false')}" oncomplete="checkChecked()"/>
+                            <apex:commandButton value="<" action="{!handlePreviousPage}" reRender="tableForm, footerTable" disabled="{!IF(hasPreviousPage == false, 'true', 'false')}" oncomplete="checkChecked()"/>
+                            <apex:repeat value="{!pages}" var="page">
+                                <apex:commandButton value="{!page}" styleClass="btnPage {!IF(page == pageNumber, 'currentPage', '')}" action="{!moveToPage}" reRender="tableForm, footerTable" oncomplete="checkChecked()">
+                                    <apex:param name="page" value="{!page}" assignTo="{!pageNumber}" />
+                                </apex:commandButton>
+                            </apex:repeat>
+                            <apex:commandButton value=">" action="{!handleNextPage}" disabled="{!IF(hasNextPage == false, 'true', 'false')}" reRender="tableForm, footerTable" oncomplete="checkChecked()"/>
+                            <apex:commandButton value=">>" action="{!getlastPage}" reRender="tableForm, footerTable" disabled="{!IF(hasNextPage == false, 'true', 'false')}" oncomplete="checkChecked()"/>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </div>
+        
+        <!-- Detail modal -->
+        <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="DetailModalLabel">Detail</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <apex:pageBlock id="studentInfor">
+                            <table class="table tableModal">
+                                <tr>
+                                    <td><strong>Student Code:</strong></td>
+                                    <td><apex:outputText value="{!student.StudentCode__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>First Name:</strong></td>
+                                    <td><apex:outputText value="{!student.FirstName__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Name:</strong></td>
+                                    <td><apex:outputText value="{!student.LastName__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gender:</strong></td>
+                                    <td><apex:outputText value="{!IF(student.Gender__c, 'Male', 'Female')}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Birthday:</strong></td>
+                                    <td>
+                                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                            <apex:param value="{!student.BirthDay__c}" />
+                                        </apex:outputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Class Name:</strong></td>
+                                    <td><apex:outputText value="{!className}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address:</strong> </td>
+                                    <td><apex:outputText value="{!student.Address__c}"/></td>
+                                </tr>
+                            </table>
+                        </apex:pageBlock>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add student modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addModalLabel">Add student</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <apex:form id="addForm" onsubmit="return addValidation()">
+                        
+                        <div class="modal-body">
+                            
+                            <table class="tableModal table table-borderless">
+                                <tr>
+                                    <td><span class="text-danger">*</span>First Name</td>
+                                    <td>
+                                        <apex:inputText value="{!student.FirstName__c}" id="firstName" styleClass="inputModal"/>
+                                        <p class="FNMessage text-danger"></p> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Last Name</td>
+                                    <td>
+                                        <apex:inputText value="{!student.LastName__c}" id="lastName" styleClass="inputModal"/>
+                                        <p class="LNMessage text-danger"></p>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Gender </td>
+                                <td>
+                                    <apex:selectRadio value="{!student.Gender__c}" id="gender" styleClass="genderModal">
+                                        <apex:selectOption itemValue="True" itemLabel="Male"/>
+                                        <apex:selectOption itemValue="False" itemLabel="Female"/>  
+                                    </apex:selectRadio>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>BirthDay </td>
+                                    <td>
+                                        <apex:inputField type="date" value="{!student.BirthDay__c}" id="birthDay" styleClass="inputModal"/>
+                                        <p class="BDMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Class</td>
+                                    <td>
+                                        <apex:selectList value="{!student.Class__c}" size="1" id="class" styleClass="inputModal">
+                                            <apex:selectOptions value="{!options}" />
+                                        </apex:selectList>
+                                        <p class="CMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Address</td>
+                                    <td>
+                                        <apex:inputText value="{!student.Address__c}" id="address" styleClass="inputModal"/>
+                                        <p class="AMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                            </table>
+                    </div>
+                    <div class="modal-footer">
+                        <apex:commandButton value="Insert" action="{!createStudent}" oncomplete="showMessage('addModal'), checkChecked()" reRender="addForm, tableForm, message, footerTable" styleClass="btn"/>
+                    </div>
+                </apex:form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update student modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateModalLabel">Edit student</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <apex:form id="updateForm" onsubmit="return editValidation();">
+                        <div class="modal-body">
+                            <table class="tableModal table table-borderless">
+                                <tr>
+                                    <td><span class="text-danger">*</span>First Name</td>
+                                    <td>
+                                        <apex:inputText value="{!student.FirstName__c}" id="firstName" styleClass="inputModal"/>
+                                        <p class="FNMessage text-danger"></p> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Last Name</td>
+                                    <td>
+                                        <apex:inputText value="{!student.LastName__c}" id="lastName" styleClass="inputModal"/>
+                                        <p class="LNMessage text-danger"></p>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Gender </td>
+                                <td>
+                                    <apex:selectRadio value="{!student.Gender__c}" id="gender" styleClass="genderModal">
+                                    <apex:selectOption itemValue="True" itemLabel="Male"/>
+                                    <apex:selectOption itemValue="False" itemLabel="Female"/>  
+                                    </apex:selectRadio>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>BirthDay </td>
+                                    <td>
+                                        <apex:inputField type="date" value="{!student.BirthDay__c}" id="birthDay" styleClass="inputModal"/>
+                                        <p class="BDMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Class</td>
+                                    <td>
+                                        <apex:selectList value="{!student.Class__c}" size="1" id="class" styleClass="inputModal">
+                                            <apex:selectOptions value="{!options}" />
+                                        </apex:selectList>
+                                        <p class="CMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Address</td>
+                                    <td>
+                                        <apex:inputText value="{!student.Address__c}" id="address" styleClass="inputModal"/>
+                                        <p class="AMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    <div class="modal-footer">
+                        <apex:commandButton value="Save" oncomplete="showMessage('updateModal'), checkChecked()" action="{!updateStudent}" reRender="updateForm, tableForm, message, footerTable" styleClass="btn"/>
+                    </div>
+                </apex:form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm delete student -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel">Are you sure want to delete this student?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <apex:pageBlock id="delStudent">
+                            <table class="tableModal">
+                                <tr>
+                                    <td><strong>Student Code:</strong></td>
+                                    <td><apex:outputText value="{!student.StudentCode__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>First Name:</strong></td>
+                                    <td><apex:outputText value="{!student.FirstName__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Name:</strong></td>
+                                    <td><apex:outputText value="{!student.LastName__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gender:</strong></td>
+                                    <td><apex:outputText value="{!IF(student.Gender__c, 'Male', 'Female')}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Birthday:</strong></td>
+                                    <td>
+                                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                            <apex:param value="{!student.BirthDay__c}" />
+                                        </apex:outputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Class Name:</strong></td>
+                                    <td><apex:outputText value="{!className}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address:</strong> </td>
+                                    <td><apex:outputText value="{!student.Address__c}"/></td>
+                                </tr>
+                            </table>
+                        </apex:pageBlock>
+                    </div>
+                    <div class="modal-footer">
+                        <apex:form>
+                            <apex:commandButton value="Delete" action="{!deleteStudent}" reRender="tableForm, message, footerTable" oncomplete="showMessage('deleteModal')" styleClass="btn"/>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm delete student selected -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-danger" id="confirmModalLabel">Are you sure want to delete selected student?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <apex:form id="deleteSelectedModal">
+                            <ul>
+                                <apex:repeat value="{!studentsToDelete}" var="studentCode">
+                                    <li>- {!studentCode}</li>
+                                </apex:repeat>
+                            </ul>
+                        </apex:form>
+                    </div>
+                    <div class="modal-footer">
+                        <apex:form>
+                            <apex:commandButton value="Yes" action="{!deleteSelectedStudent}" reRender="tableForm, message, footerTable" oncomplete="showMessage('confirmModal'), checkChecked()" styleClass="btn"/>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-messages">
+            <apex:pageMessages id="message"/>
+        </div>
+        <script>
+            function editValidation(idForm){
+                firstName = document.getElementById("{!$Component.updateForm.firstName}").value;
+                lastName = document.getElementById("{!$Component.updateForm.lastName}").value;
+                birthDay = document.getElementById("{!$Component.updateForm.birthDay}").value;
+                address = document.getElementById("{!$Component.updateForm.address}").value;
+                class__c = document.getElementById("{!$Component.updateForm.class}").value;
+                return validation(firstName, lastName, birthDay, address, class__c);
+            }
+
+            function addValidation(){
+                firstName = document.getElementById("{!$Component.addForm.firstName}").value;
+                lastName = document.getElementById("{!$Component.addForm.lastName}").value;
+                birthDay = document.getElementById("{!$Component.addForm.birthDay}").value;
+                address = document.getElementById("{!$Component.addForm.address}").value;
+                class__c = document.getElementById("{!$Component.addForm.class}").value;
+                return validation(firstName, lastName, birthDay, address, class__c);
+            }
+
+            function updateDay(){
+                $("input[id$='searchByDay']").val($("#searchDay").val());
+            }
+
+            $(document).ready(function(){
+                $("#searchYear").change(function(){
+                    $("input[id$='searchByYear']").val($("#searchYear").val());
+                    $("input[id$='searchBirthDay']").val('');
+                    selectListDay()
+                });
+
+                $("#searchMonth").change(function(){
+                    $("input[id$='searchByMonth']").val($("#searchMonth").val());
+                    $("input[id$='searchBirthDay']").val('');
+                    selectListDay()
+                });
+
+                $("#searchDay").change(function(){
+                    $("input[id$='searchByDay']").val($("#searchDay").val());
+                    $("input[id$='searchBirthDay']").val('');
+                });
+
+                $("input[id$='searchBirthDay']").change(function(){
+                    $("input[id$='searchByMonth']").val(0);
+                    $("input[id$='searchByYear']").val(0);
+                    $("input[id$='searchByDay']").val(0);
+                    $("#searchYear").val(0);
+                    $("#searchMonth").val(0);
+                    $("#searchDay").val(0);
+                    selectListDay()
+                });
+            });
+    </script>
+    </body>
+</html>
+</apex:page>

@@ -1,0 +1,46 @@
+<template>
+    <div class="modal">
+        <lightning-modal-header label="Detail student"></lightning-modal-header>
+        <lightning-modal-body> 
+            <table class="tableDetail">
+                <tr>
+                    <td class="col-40"><strong>Student Code:</strong></td>
+                    <td class="col-60">{student.StudentCode__c}</td>
+                </tr>
+                <tr>
+                    <td class="col-40"><strong>First Name:</strong></td>
+                    <td class="col-60">{student.FirstName__c}</td>
+                </tr>
+                <tr>
+                    <td class="col-40"><strong>Last Name:</strong></td>
+                    <td class="col-60">{student.LastName__c}</td>
+                </tr>
+                <tr>
+                    <td class="col-40"><strong>Gender:</strong></td>
+                    <td class="col-60">
+                        <span lwc:if={student.Gender__c}>Male</span>
+                        <span lwc:else>Female</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-40"><strong>Birthday:</strong></td>
+                    <td class="col-60">{student.BirthDay__c}</td>
+                </tr>
+                <tr>
+                    <td class="col-40"><strong>Class Name:</strong></td>
+                    <td class="col-60">{student.Class}</td>
+                </tr>
+                <tr>
+                    <td class="col-40"><strong>Address:</strong> </td>
+                    <td class="col-60">{student.Address__c}</td>
+                </tr>
+            </table>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button variant="brand"
+                                label="Close"
+                                title="close"
+                                onclick={closeModal}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>

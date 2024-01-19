@@ -1,0 +1,34 @@
+<template>
+    <div class="modal">
+        <lightning-modal-header label="Update student"></lightning-modal-header>
+        <lightning-modal-body> 
+            <lightning-input type="text" class="firstName" value={student.FirstName__c} label="First name"></lightning-input>
+            <p class="slds-text-color_destructive FNMessage"></p>
+            <lightning-input type="text" class="lastName" value={student.LastName__c} label="Last name"></lightning-input>
+            <p class="slds-text-color_destructive LNMessage"></p>
+            <lightning-radio-group class="gender"
+                              label="Gender"
+                              options={options}
+                              value={student.Gender__c}
+                              type="radio"></lightning-radio-group>
+            <p class="slds-text-color_destructive GMessage"></p>
+            <lightning-input type="date" class="birthDay" label="Birthday" value={student.BirthDay__c} date-style="short"></lightning-input>
+            <p class="slds-text-color_destructive BDMessage"></p>
+            <lightning-combobox class="class" label="Class" options={classOptions} value={student.Class__c} placeholder="Select class"></lightning-combobox>
+            <p class="slds-text-color_destructive CMessage"></p>
+            <lightning-input type="text" class="address" label="Address" value={student.Address__c}></lightning-input>
+            <p class="slds-text-color_destructive AMessage"></p>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button variant="neutral"
+                                label="Cancel"
+                                title="Cancel"
+                                onclick={closeModal}
+                                class="slds-m-right_small"></lightning-button>
+            <lightning-button variant="brand"
+                                label="Save"
+                                title="Save"
+                                onclick={saveRecordData}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>

@@ -1,0 +1,59 @@
+<aura:component controller="CMP_UpdateStudentCtrl" >
+    <aura:attribute name="showModal" type="boolean" default="false"/>
+    <aura:attribute name="student" type="Student__c"/>
+    <aura:attribute name="classOptions" type="List"/>
+    <aura:attribute name="genderOptions" type="List" default="[
+    {'label': 'Male', 'value': true},
+    {'label': 'Female', 'value': false}
+    ]"/>
+
+    <aura:method name ="getEditModal" action="{!c.getEditModal}">
+        <aura:attribute name="studentId" type="String"/>
+    </aura:method>
+    
+    <aura:registerEvent name="reload_evt" type="c:CMP_reloadStudentEvt"/>
+
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div id="custom-Modal">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Student</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning:input type="text" name="firstName" label="First name" value="{!v.student.FirstName__c}" />
+                        <p id="FNMessage" class="slds-text-color_destructive"></p>
+                        <lightning:input type="text" name="lastName" label="Last name" value="{!v.student.LastName__c}" />
+                        <p id="LNMessage" class="slds-text-color_destructive"></p>
+                        <lightning:radioGroup name="gender"
+                                            label="Gender"
+                                            options="{! v.genderOptions }"
+                                            value="{!v.student.Gender__c }"
+                                            type="radio"/>
+                        <p id="GMessage" class="slds-text-color_destructive"></p>
+                        <lightning:input type="date" name="birthDay" label="Birthday" value="{!v.student.BirthDay__c}" />
+                        <p id="BDMessage" class="slds-text-color_destructive"></p>
+                        <lightning:select label="Class" value="{!v.student.Class__c}">
+                                <aura:iteration items="{!v.classOptions}" var="option">
+                                    <option value="{!option.value}">{!option.label}</option>
+                                </aura:iteration>
+                        </lightning:select>
+                        <p id="CMessage" class="slds-text-color_destructive"></p>
+                        <lightning:input type="text" name="name" label="Address" value="{!v.student.Address__c}" />
+                        <p id="AMessage" class="slds-text-color_destructive"></p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                            label="Cancel"
+                                            title="Cancel"
+                                            onclick="{!c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                            label="Save"
+                                            title="Save"
+                                            onclick="{!c.saveRecordData}"/>
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </aura:if>
+</aura:component>	

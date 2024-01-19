@@ -1,0 +1,120 @@
+<apex:page controller="VF_CreateStudentCtrl">
+  <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"/>
+  <apex:stylesheet value="{!$Resource.SchoolProject_student}" />
+  <div id="content">
+    <h1>Create a new student</h1>
+    <apex:form id="addForm" onsubmit="return addValidation()">
+      <table>
+        <tr>
+            <td>First Name</td>
+            <td>
+                <apex:inputField value="{!student.FirstName__c}" id="firstName"/>
+                <p class="FNMessage text-danger"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>
+                <apex:inputField value="{!student.LastName__c}" id="lastName"/>
+                <p class="LNMessage text-danger"></p>
+            </td>
+           
+        </tr>
+        <tr>
+            <td>Gender: </td>
+        <td>
+            <apex:selectRadio value="{!student.Gender__c}" id="gender">
+            <apex:selectOption itemValue="True" itemLabel="Male"/>
+            <apex:selectOption itemValue="False" itemLabel="Female"/>  
+            </apex:selectRadio>
+        </td>
+        </tr>
+        <tr>
+            <td>BirthDay: </td>
+            <td>
+                <apex:inputField value="{!student.BirthDay__c}" id="birthDay"/>
+                <p class="BDMessage text-danger"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>Class</td>
+            <td>
+                <apex:selectList value="{!student.Class__c}" size="1" id="class">
+                    <apex:selectOptions value="{!options}" />
+                </apex:selectList>
+            </td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>
+                <apex:inputField value="{!student.Address__c}" id="address"/>
+                <p class="AMessage text-danger"></p>
+            </td>
+        </tr>
+    </table>
+    <apex:pageMessages />
+    <apex:commandButton value="Insert" action="{!createStudent}" styleClass="btn"/>
+    <br></br>
+    <apex:outputLink value="/apex/VF_SearchStudent" style="font-size: 15px;">Back to list</apex:outputLink>
+    </apex:form>
+  </div>
+  <script>
+    function addValidation(){
+        firstName = document.getElementById("{!$Component.addForm.firstName}").value;
+        lastName = document.getElementById("{!$Component.addForm.lastName}").value;
+        birthDay = document.getElementById("{!$Component.addForm.birthDay}").value;
+        address = document.getElementById("{!$Component.addForm.address}").value;
+        return validation(firstName, lastName, birthDay, address);
+    }
+
+    function validation(firstName, lastName, birthDay, address) {
+        isValid = true;
+        if(firstName === ''){
+            $(".FNMessage").html('Please enter first name');
+            isValid = false;
+        }else if (firstName.length > 255){
+            $(".FNMessage").html('First name must be less than 255 characters');
+            isValid = false;
+        } else{
+            $(".FNMessage").html('');
+        }
+        
+        if(lastName === ''){
+            $(".LNMessage").html('Please enter last name');
+            isValid = false;
+        }else if (lastName.length > 255){
+            $(".LNMessage").html('Last name must be less than 255 characters');
+            isValid = false;
+        } else{
+            $(".LNMessage").html('');
+        }
+
+        if(address === ''){
+            $(".AMessage").html('Please enter address');
+            isValid = false;
+        }else if (address.length > 255){
+            $(".AMessage").html('Address must be less than 255 characters');
+            isValid = false;
+        }else{
+            $(".AMessage").html('');
+        }
+
+        if(birthDay === ''){
+            $(".BDMessage").html('Please enter birthday');
+            isValid = false;
+        }else{
+            var parts = birthDay.split("/");
+            birthYear = parseInt(parts[2], 10);
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            if(currentYear - birthYear < 18){
+                $(".BDMessage").html('You must be at least 18 years old');
+                isValid = false;
+            }else{
+                $(".BDMessage").html('');
+            }
+        }
+        return isValid; 
+    }
+  </script>
+</apex:page>

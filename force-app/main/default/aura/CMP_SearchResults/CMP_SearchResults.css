@@ -1,0 +1,79 @@
+
+.THIS .col-sCode {
+    width: 10%;
+}
+
+.THIS.dataTable{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.THIS.dataTable td{
+    padding: 3px;
+    text-align: left;
+    border: 1px solid #121010;
+    text-align: center;
+}
+
+.THIS.dataTable th{
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #121010;
+    background-color: #ddd;
+}
+
+.THIS .col-checkbox{
+    width: 20px;
+}
+
+.THIS .col-Name {
+    width: 25%;
+}
+
+.THIS.btn-func{
+    width: 10%;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.THIS .currentPage{
+    background-color: blue;
+    color: aliceblue;
+}
+
+.THIS .btn-action{
+    margin: 0 2%;
+    width: 25%;
+    color: #121010;
+    border: 1px solid #656161;
+}
+
+.THIS .btn-page{
+    margin: 5px;
+}
+
+.THIS .col-Action{
+    width: 25%;
+}
+
+.THIS .col-40{
+    width: 40%;
+    padding: 8px;
+}
+
+.THIS .col-60{
+    width: 60%;
+    padding: 8px;
+}
+
+.THIS .modal-deleteSeleted {
+    width: 25%;
+}
+
+.THIS #custom-Modal{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.THIS .tableDelete td{
+    text-align: center;
+}

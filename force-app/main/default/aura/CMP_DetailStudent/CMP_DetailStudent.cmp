@@ -1,0 +1,60 @@
+<aura:component controller="CMP_DetailStudentCtrl">
+    <aura:attribute name="showModal" type="boolean" default="false"/>
+    <aura:attribute name="student" type="Student__c"/>
+
+    <aura:method name ="getDetailModal" action="{!c.getDetailModal}">
+        <aura:attribute name="studentId" type="String"/>
+    </aura:method>
+    
+    <aura:registerEvent name="reload_evt" type="c:CMP_StudentManagementEvt"/>
+
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div id="custom-Modal">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Detail</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <table class="tableDetail">
+                            <tr>
+                                <td class="col-40"><strong>Student Code:</strong></td>
+                                <td class="col-60">{!v.student.StudentCode__c}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-40"><strong>First Name:</strong></td>
+                                <td class="col-60">{!v.student.FirstName__c}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-40"><strong>Last Name:</strong></td>
+                                <td class="col-60">{!v.student.LastName__c}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-40"><strong>Gender:</strong></td>
+                                <td class="col-60">{!v.student.Gender__c == true ? 'Male' : 'Female'}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-40"><strong>Birthday:</strong></td>
+                                <td class="col-60">{!v.student.BirthDay__c}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-40"><strong>Class Name:</strong></td>
+                                <td class="col-60">{!v.student.Class__r.Name}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-40"><strong>Address:</strong> </td>
+                                <td class="col-60">{!v.student.Address__c}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                            label="Cancel"
+                                            title="Cancel"
+                                            onclick="{!c.closeModel }"/>
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </aura:if>
+</aura:component>	

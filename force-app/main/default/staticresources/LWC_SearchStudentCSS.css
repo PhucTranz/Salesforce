@@ -1,0 +1,15 @@
+.btn-page .slds-button{
+    width: 20px;
+}
+
+.btn-func .slds-button{
+    width: 10%;
+}
+
+.page-icon svg{
+    margin: auto;
+}
+
+.slds-scrollable_y{
+    background-color: blue;
+}

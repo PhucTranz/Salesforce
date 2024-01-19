@@ -1,0 +1,83 @@
+*{
+    font-weight: 500;
+}
+.col-sCode {
+    width: 10%;
+}
+
+.dataTable{
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.dataTable td{
+    padding: 3px;
+    text-align: left;
+    border: 1px solid #121010;
+    text-align: center;
+}
+
+.dataTable th{
+    font-weight: 700;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #121010;
+    background-color: #ddd;
+}
+
+.col-checkbox{
+    width: 15px;
+}
+
+.col-Name {
+    width: 25%;
+}
+
+.btn-func{
+    font-weight: 600;
+    margin-right: 20px;
+}
+
+.btn-action{
+    margin: 0 2%;
+    width: 25%;
+}
+
+.btn-page{
+    margin: 5px;
+}
+
+.col-Action{
+    width: 25%;
+}
+
+.col-40{
+    width: 40%;
+    padding: 8px;
+}
+
+.col-60{
+    width: 60%;
+    padding: 8px;
+}
+
+.modal-deleteSeleted {
+    width: 25%;
+}
+
+.tableDelete td{
+    text-align: center;
+}
+
+.col-input{
+    margin: 20px;
+}
+
+.btn-search{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5px;
+    margin-left: 20px;
+}

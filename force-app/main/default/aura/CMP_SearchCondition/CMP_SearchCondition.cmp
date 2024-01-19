@@ -1,0 +1,73 @@
+<aura:component controller="CMP_SearchStudentCtrl" >
+    <aura:attribute name="searchByName" type="String"/>
+    <aura:attribute name="searchByClass" type="String"/>
+    <aura:attribute name="searchByStudentCode" type="String"/>
+    <aura:attribute name="searchByGender" type="String"/>
+    <aura:attribute name="searchByBirthday" type="Date"/>
+    <aura:attribute name="searchByYear" type="Integer" default="0" />
+    <aura:attribute name="searchByMonth" type="Integer" default="0" />
+    <aura:attribute name="searchByDay" type="Integer"/>
+    <aura:attribute name="yearOptions" type="List"/>
+    <aura:attribute name="monthOptions" type="List"/>
+    <aura:attribute name="dayOptions" type="List"/>
+    <aura:attribute name="classOptions" type="List"/>
+    <aura:attribute name="genderOptions" type="List" default="[
+                                    {'label': '----', 'value': ''},
+                                    {'label': 'Male', 'value': 'true'},
+                                    {'label': 'Female', 'value': 'false'}
+                                    ]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="sendDataEvent" type="c:CMP_SearchStudentEvt"/>
+    <aura:handler event="c:CMP_reloadStudentEvt" action="{!c.reloadTable}"/>
+
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:input type="text" label="Student Code"  value="{!v.searchByStudentCode}"/>
+    </div>
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:input type="text" label="Name" value="{!v.searchByName}" />
+    </div>
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:select label="Gender" value="{!v.searchByGender}" class="inputSearch">
+            <aura:iteration items="{!v.genderOptions}" var="genderOption">
+                <option text="{!genderOption.label}" value="{!genderOption.value}"/>
+            </aura:iteration>
+        </lightning:select>
+    </div>
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:select label="Class" value="{!v.searchByClass}">
+            <aura:iteration items="{!v.classOptions}" var="option">
+                <option value="{!option.value}">{!option.label}</option>
+            </aura:iteration>
+        </lightning:select>
+    </div>
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:input type="Date" label="Birthday"  value="{!v.searchByBirthday}" onchange="{!c.selectedBirthday}" />
+    </div>
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:select label="Day of birth"  value="{!v.searchByDay}" onchange="{!c.selectedDay}" >
+            <aura:iteration items="{!v.dayOptions}" var="option">
+                <option value="{!option.value}" selected="{!option.value == v.searchByDay}">{!option.label}</option>
+            </aura:iteration>
+        </lightning:select>
+    </div>  
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:select label="Month of birth"  value="{!v.searchByMonth}" onchange="{!c.selectedMonthOrYear}" >
+            <aura:iteration items="{!v.monthOptions}" var="option">
+                <option value="{!option.value}">{!option.label}</option>
+            </aura:iteration>
+        </lightning:select>
+    </div>
+    <div class="slds-col slds-size_1-of-12 col-input">
+        <lightning:select label="Year of birth" value="{!v.searchByYear}" onchange="{!c.selectedMonthOrYear}">
+            <aura:iteration items="{!v.yearOptions}" var="option">
+                <option value="{!option.value}">{!option.label}</option>
+            </aura:iteration>
+        </lightning:select>
+    </div>
+    <div class="slds-col btn-search">
+        <br></br>
+        <br></br>
+        <button class="slds-button slds-button_outline-brand" onclick="{!c.search}">Search</button>
+    </div>
+</aura:component>	

@@ -1,0 +1,42 @@
+<apex:page controller="VF_DetailStudentCtrl">
+    <apex:stylesheet value="{!$Resource.SchoolProject_student}" />
+    <div id="content">
+        <h1>Student Detail</h1>
+        <table>
+            <tr>
+                <td>Student Code: </td>
+                <td><apex:outputText value="{!student.StudentCode__c}"/></td>
+            </tr>
+            <tr>
+                <td>First Name: </td>
+                <td><apex:outputText value="{!student.FirstName__c}"/></td>
+            </tr>
+            <tr>
+                <td>Last Name: </td>
+                <td><apex:outputText value="{!student.LastName__c}"/></td>
+            </tr>
+            <tr>
+                <td>Sex: </td>
+                <td><apex:outputText value="{!IF(student.Gender__c, 'Male', 'Female')}"/></td>
+            </tr>
+            <tr>
+                <td>BirthDay: </td>
+                <td>
+                    <apex:outputText value="{0,date,dd/MM/yyyy}">
+                        <apex:param value="{!student.BirthDay__c}" />
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td>Class Name: </td>
+                <td><apex:outputText value="{!className}"/></td>
+            </tr>
+            <tr>
+                <td>Address: </td>
+                <td><apex:outputText value="{!student.Address__c}"/></td>
+            </tr>
+        </table>
+        <apex:outputLink value="/apex/VF_UpdateStudent?studentId={!student.Id}" style="font-size: 15px;">Edit</apex:outputLink>
+        <apex:outputLink value="/apex/VF_SearchStudent" style="font-size: 20px;">Back to list</apex:outputLink>
+    </div>
+</apex:page>
