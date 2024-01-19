@@ -56,16 +56,36 @@ public with sharing class Test_StudentTriggerHandler {
         try {
             afterInsertHandler(newStudents);
             afterDeleteHandeler(oldStudents);
+            List<Id> studentIds = new List<Id>();
+            for (Student__c student : newStudents) {
+                studentIds.add(student.Id);
+            }
+            makeAddressUpdateFutureCall(studentIds);
         } catch (Exception e) {
             System.debug(e);
         }
     }
 
+    @future
+    public static void makeAddressUpdateFutureCall(List<Id> studentIds) {
+        List<Student__c> students = [SELECT Id, Address__c FROM Student__c WHERE Id IN :studentIds];
+        for (Student__c student : students) {
+            student.Address__c = 'Test @future';
+        }
+        update students;
+    }
+
     public static void beforeUpdateHandler(List<Student__c> oldStudents, List<Student__c> newStudents){
         for (Student__c student: newStudents) {
-            if (student.BirthDay__c.year() < 1995) {
-                student.BirthDay__c.addError('Year of birth must be greater than 1995');
+            try {
+                if (student.BirthDay__c.year() < 1995) {
+                    throw new CustomException();
+                }
+            } catch (CustomException e) {
+                student.addError('Year of birth must be greater than 1995');
             }
         }
     }
+
+    public class CustomException extends Exception {}
 }
