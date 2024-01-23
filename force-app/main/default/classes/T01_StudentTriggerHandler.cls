@@ -3,7 +3,7 @@ public without sharing class T01_StudentTriggerHandler {
     public static void beforeInsertOrUpdate(List<Student__c> newStudents) {
         for (Student__c student : newStudents) {
             List<String> listErr = new List<String>();
-            System.debug(student.Class_look__c);
+            
             if (String.isBlank(student.LastName__c)) {
                 listErr.add(' LastName__c');
             }
@@ -15,13 +15,13 @@ public without sharing class T01_StudentTriggerHandler {
             }
             if (student.BirthDay__c != null) {
                 Integer currentYear = System.now().year();
-                if( currentYear - student.BirthDay__c.year() < 18) {
+                if (currentYear - student.BirthDay__c.year() < 18) {
                     student.BirthDay__c.addError('Student must be at least 18 years old');
                 }
             } else {
                 listErr.add(' BirthDay__c');
             }
-            if (student.Gender__c == null) {
+            if (String.isBlank(student.Gender__c)) {
                 listErr.add(' Gender__c');
             }
 

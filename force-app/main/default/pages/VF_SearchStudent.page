@@ -110,8 +110,8 @@
                             <td>{!count}</td>
                             <td>{!student.StudentCode__c}</td>
                             <td>{!IF(LEN(student.Name) > 30, LEFT(student.Name, 30)+'...', student.Name) }</td>
-                            <td>{!IF(student.Gender__c, 'Male', 'Female')}</td>
-                            <td>{!student.Class__r.Name}</td>
+                            <td>{!student.Gender__c}</td>
+                            <td>{!student.Class_look__r.Name}</td>
                             <td>                                        
                                 <apex:outputText value="{0,date,dd/MM/yyyy}">
                                     <apex:param value="{!student.BirthDay__c}" />
@@ -179,7 +179,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Gender:</strong></td>
-                                    <td><apex:outputText value="{!IF(student.Gender__c, 'Male', 'Female')}"/></td>
+                                    <td><apex:outputText value="{!student.Gender__c}"/></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Birthday:</strong></td>
@@ -236,8 +236,8 @@
                                     <td><span class="text-danger">*</span>Gender </td>
                                 <td>
                                     <apex:selectRadio value="{!student.Gender__c}" id="gender" styleClass="genderModal">
-                                        <apex:selectOption itemValue="True" itemLabel="Male"/>
-                                        <apex:selectOption itemValue="False" itemLabel="Female"/>  
+                                        <apex:selectOption itemValue="Male" itemLabel="Male"/>
+                                        <apex:selectOption itemValue="Female" itemLabel="Female"/>  
                                     </apex:selectRadio>
                                 </td>
                                 </tr>
@@ -251,7 +251,7 @@
                                 <tr>
                                     <td><span class="text-danger">*</span>Class</td>
                                     <td>
-                                        <apex:selectList value="{!student.Class__c}" size="1" id="class" styleClass="inputModal">
+                                        <apex:selectList value="{!student.Class_look__c}" size="1" id="class" styleClass="inputModal">
                                             <apex:selectOptions value="{!options}" />
                                         </apex:selectList>
                                         <p class="CMessage text-danger"></p>
@@ -304,8 +304,8 @@
                                     <td><span class="text-danger">*</span>Gender </td>
                                 <td>
                                     <apex:selectRadio value="{!student.Gender__c}" id="gender" styleClass="genderModal">
-                                    <apex:selectOption itemValue="True" itemLabel="Male"/>
-                                    <apex:selectOption itemValue="False" itemLabel="Female"/>  
+                                    <apex:selectOption itemValue="Male" itemLabel="Male"/>
+                                    <apex:selectOption itemValue="Female" itemLabel="Female"/>  
                                     </apex:selectRadio>
                                 </td>
                                 </tr>
@@ -319,7 +319,7 @@
                                 <tr>
                                     <td><span class="text-danger">*</span>Class</td>
                                     <td>
-                                        <apex:selectList value="{!student.Class__c}" size="1" id="class" styleClass="inputModal">
+                                        <apex:selectList value="{!student.Class_look__c}" size="1" id="class" styleClass="inputModal">
                                             <apex:selectOptions value="{!options}" />
                                         </apex:selectList>
                                         <p class="CMessage text-danger"></p>
@@ -367,7 +367,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Gender:</strong></td>
-                                    <td><apex:outputText value="{!IF(student.Gender__c, 'Male', 'Female')}"/></td>
+                                    <td><apex:outputText value="{!student.Gender__c}"/></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Birthday:</strong></td>

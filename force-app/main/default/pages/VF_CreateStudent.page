@@ -24,8 +24,8 @@
             <td>Gender: </td>
         <td>
             <apex:selectRadio value="{!student.Gender__c}" id="gender">
-            <apex:selectOption itemValue="True" itemLabel="Male"/>
-            <apex:selectOption itemValue="False" itemLabel="Female"/>  
+            <apex:selectOption itemValue="Male" itemLabel="Male"/>
+            <apex:selectOption itemValue="Female" itemLabel="Female"/>  
             </apex:selectRadio>
         </td>
         </tr>
@@ -39,7 +39,7 @@
         <tr>
             <td>Class</td>
             <td>
-                <apex:selectList value="{!student.Class__c}" size="1" id="class">
+                <apex:selectList value="{!student.Class_look__c}" size="1" id="class">
                     <apex:selectOptions value="{!options}" />
                 </apex:selectList>
             </td>

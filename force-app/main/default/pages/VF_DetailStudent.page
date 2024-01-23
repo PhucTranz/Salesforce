@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <td>Sex: </td>
-                <td><apex:outputText value="{!IF(student.Gender__c, 'Male', 'Female')}"/></td>
+                <td><apex:outputText value="{!student.Gender__c}"/></td>
             </tr>
             <tr>
                 <td>BirthDay: </td>
