@@ -37,7 +37,7 @@ public with sharing class CMP_SearchStudentCtrl {
         query += ', Address__c';
         query += ', Gender__c';
         query += ', StudentCode__c';
-        query += ', Class__r.Name';
+        query += ', Class_look__r.Name';
         query += ', BirthDay__c';
         query += ' FROM Student__c';
 
@@ -52,11 +52,11 @@ public with sharing class CMP_SearchStudentCtrl {
         }
 
         if (String.isNotBlank(searchByGender)) {
-            lstWhereConditions.add(' Gender__c = ' + Boolean.valueOf(searchByGender));
+            lstWhereConditions.add(' Gender__c = :searchByGender');
         }
 
         if (String.isNotBlank(searchByClass)) {
-            lstWhereConditions.add(' Class__c = :searchByClass');
+            lstWhereConditions.add(' Class_look__c = :searchByClass');
         }
 
         if (searchByBirthday != null) {
@@ -125,7 +125,7 @@ public with sharing class CMP_SearchStudentCtrl {
                 Id,
                 Address__c, 
                 BirthDay__c,
-                Class__r.Name, 
+                Class_look__r.Name, 
                 FirstName__c, 
                 Gender__c, 
                 LastName__c, 

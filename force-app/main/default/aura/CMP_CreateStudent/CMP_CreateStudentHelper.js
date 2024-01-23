@@ -60,7 +60,7 @@
             }
         }
 
-        if (this.isBlank(student.Class__c)) {
+        if (this.isBlank(student.Class_look__c)) {
             document.getElementById("CMessage").innerHTML = 'Please choose a class';
             isValid = false;
         } else {

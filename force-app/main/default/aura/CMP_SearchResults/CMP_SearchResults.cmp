@@ -37,7 +37,7 @@
                     <td>{!student.STT}</td>
                     <td>{!student.StudentCode__c}</td>
                     <td>{!student.Name}</td>
-                    <td>{!student.Gender__c == true ? 'Male' : 'Female'}</td>
+                    <td>{!student.Gender__c}</td>
                     <td>{!student.BirthDay}</td>
                     <td>{!student.Class}</td>
                     <td>
@@ -87,7 +87,7 @@
                             </tr>
                             <tr>
                                 <td class="col-40"><strong>Gender:</strong></td>
-                                <td class="col-60">{!v.student.Gender__c == true ? 'Male' : 'Female'}</td>
+                                <td class="col-60">{!v.student.Gender__c}</td>
                             </tr>
                             <tr>
                                 <td class="col-40"><strong>Birthday:</strong></td>
@@ -95,7 +95,7 @@
                             </tr>
                             <tr>
                                 <td class="col-40"><strong>Class Name:</strong></td>
-                                <td class="col-60">{!v.student.Class__r.Name}</td>
+                                <td class="col-60">{!v.student.Class_look__r.Name}</td>
                             </tr>
                             <tr>
                                 <td class="col-40"><strong>Address:</strong> </td>

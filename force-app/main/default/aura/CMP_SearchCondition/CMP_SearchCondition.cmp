@@ -13,8 +13,8 @@
     <aura:attribute name="classOptions" type="List"/>
     <aura:attribute name="genderOptions" type="List" default="[
                                     {'label': '----', 'value': ''},
-                                    {'label': 'Male', 'value': 'true'},
-                                    {'label': 'Female', 'value': 'false'}
+                                    {'label': 'Male', 'value': 'Male'},
+                                    {'label': 'Female', 'value': 'Female'}
                                     ]"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>

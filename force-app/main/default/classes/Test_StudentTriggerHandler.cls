@@ -70,7 +70,7 @@ public with sharing class Test_StudentTriggerHandler {
     public static void makeAddressUpdateFutureCall(List<Id> studentIds) {
         List<Student__c> students = [SELECT Id, Address__c FROM Student__c WHERE Id IN :studentIds];
         for (Student__c student : students) {
-            student.Address__c = 'Test @future';
+            student.Address__c = 'Test @future v01';
         }
         update students;
     }

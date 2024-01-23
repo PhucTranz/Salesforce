@@ -3,8 +3,8 @@
     <aura:attribute name="student" type="Student__c"/>
     <aura:attribute name="classOptions" type="List"/>
     <aura:attribute name="genderOptions" type="List" default="[
-    {'label': 'Male', 'value': true},
-    {'label': 'Female', 'value': false}
+    {'label': 'Male', 'value': 'Male'},
+    {'label': 'Female', 'value': 'Female'}
     ]"/>
 
     <aura:method name ="getEditModal" action="{!c.getEditModal}">
@@ -33,7 +33,7 @@
                         <p id="GMessage" class="slds-text-color_destructive"></p>
                         <lightning:input type="date" name="birthDay" label="Birthday" value="{!v.student.BirthDay__c}" />
                         <p id="BDMessage" class="slds-text-color_destructive"></p>
-                        <lightning:select label="Class" value="{!v.student.Class__c}">
+                        <lightning:select label="Class" value="{!v.student.Class_look__c}">
                                 <aura:iteration items="{!v.classOptions}" var="option">
                                     <option value="{!option.value}">{!option.label}</option>
                                 </aura:iteration>

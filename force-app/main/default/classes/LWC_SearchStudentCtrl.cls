@@ -50,6 +50,7 @@ public with sharing class LWC_SearchStudentCtrl {
         StudentSearchDTO searchDTO = (StudentSearchDTO) JSON.deserialize(searchJSON, StudentSearchDTO.class);
         
         String searchByClass = searchDTO.searchByClass;
+        String searchByGender = searchDTO.searchByGender;
         Date searchByBirthDay = searchDTO.searchByBirthday;
         List<Student__c> students = new List<Student__c>();
 
@@ -58,7 +59,7 @@ public with sharing class LWC_SearchStudentCtrl {
         query += ', Address__c';
         query += ', Gender__c';
         query += ', StudentCode__c';
-        query += ', Class__r.Name';
+        query += ', Class_look__r.Name';
         query += ', BirthDay__c';
         query += ' FROM Student__c';
 
@@ -73,11 +74,11 @@ public with sharing class LWC_SearchStudentCtrl {
         }
 
         if (String.isNotBlank(searchDTO.searchByGender)) {
-            lstWhereConditions.add(' Gender__c = ' + Boolean.valueOf(searchDTO.searchByGender));
+            lstWhereConditions.add(' Gender__c = :searchByGender');
         }
 
         if (String.isNotBlank(searchDTO.searchByClass)) {
-            lstWhereConditions.add(' Class__c = :searchByClass');
+            lstWhereConditions.add(' Class_look__c = :searchByClass');
         }
 
         if (searchDTO.searchByBirthday != null) {
@@ -102,7 +103,6 @@ public with sharing class LWC_SearchStudentCtrl {
         }
         
         query += ' ORDER BY StudentCode__c DESC';
-        
         students = Database.query(query);
         return students;
     }

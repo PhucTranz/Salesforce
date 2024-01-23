@@ -12,7 +12,7 @@ public with sharing class Test_ClassBatch implements Database.Batchable<sObject>
 
         List<Class__c> newClasses = new List<Class__c>();
         for (Integer i = classCode + 1; i <= classCode + 3; i++) {
-            Class__c newClass = new Class__c(Name = 'Lớp '+i, NumberOfStudent__c = 0);
+            Class__c newClass = new Class__c(NumberOfStudent__c = 0);
             newClasses.add(newClass);
         }
 

@@ -26,7 +26,7 @@
         for (i; i< students.length && st.length < pageSize; i++) {
             students[i].STT = i + 1;
             students[i].BirthDay = this.formatDate(students[i].BirthDay__c);
-            students[i].Class = students[i].Class__r.Name;
+            students[i].Class = students[i].Class_look__r.Name;
             st.push(students[i]);
         }
 
@@ -50,6 +50,7 @@
                 pages.push(i);
             }
         }
+        
         component.set("v.pages", pages);
         component.set("v.totalRecords", students.length);
         component.set("v.totalPages", totalPages);

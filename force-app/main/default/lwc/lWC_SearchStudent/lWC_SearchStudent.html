@@ -65,12 +65,9 @@
                                 <td>{student.STT}</td>
                                 <td>{student.StudentCode__c}</td>
                                 <td>{student.Name}</td>
-                                <td>
-                                    <span lwc:if={student.Gender__c}>Male</span>
-                                    <span lwc:else>Female</span>
-                                </td>
+                                <td>{student.Gender__c}</td>
                                 <td>{student.BirthDay}</td>
-                                <td>{student.Class__r.Name}</td>
+                                <td>{student.Class_look__r.Name}</td>
                                 <td>
                                     <lightning-button class="btn-action" label="Detail" onclick={openDetailModal} data-id={student.Id}></lightning-button>
                                     <lightning-button class="btn-action" label="Edit" onclick={openUpdateModal} data-id={student.Id}></lightning-button>

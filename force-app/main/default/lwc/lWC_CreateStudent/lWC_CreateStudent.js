@@ -6,8 +6,8 @@ export default class LWC_CreateStudent extends LightningModal {
 
     get options() {
         return [
-            { label: 'Male', value: 'true' },
-            { label: 'Female', value: 'false' },
+            { label: 'Male', value: 'Male' },
+            { label: 'Female', value: 'Female' },
         ];
     }
 
@@ -29,7 +29,7 @@ export default class LWC_CreateStudent extends LightningModal {
                 LastName__c: lastName, 
                 Gender__c: gender, 
                 BirthDay__c: birthDay, 
-                Class__c: Class, 
+                Class_look__c: Class, 
                 Address__c: address})})
             .then(result =>{
                 const reloadEvt = new CustomEvent('reloadstudent');

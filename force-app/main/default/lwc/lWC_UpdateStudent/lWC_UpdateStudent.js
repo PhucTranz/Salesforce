@@ -24,8 +24,8 @@ export default class LWC_UpdateStudent extends LightningModal {
 
     get options() {
         return [
-            { label: 'Male', value: true },
-            { label: 'Female', value: false },
+            { label: 'Male', value: 'Male' },
+            { label: 'Female', value: 'Female' },
         ];
     }
 
@@ -34,13 +34,14 @@ export default class LWC_UpdateStudent extends LightningModal {
     }
 
     saveRecordData() {
+        
         this.student.FirstName__c = this.template.querySelector('.firstName').value;
         this.student.LastName__c = this.template.querySelector('.lastName').value;
         this.student.Gender__c = this.template.querySelector('.gender').value;
         this.student.BirthDay__c = this.template.querySelector('.birthDay').value;
-        this.student.Class__c = this.template.querySelector('.class').value;
+        this.student.Class_look__c = this.template.querySelector('.class').value;
         this.student.Address__c = this.template.querySelector('.address').value;
-        
+
         if (this.validation()){
             updateStudent({student: this.student})
             .then(result =>{
@@ -107,20 +108,20 @@ export default class LWC_UpdateStudent extends LightningModal {
             }
         }
 
-        if (this.isBlank(this.student.Class__c)) {
+        if (this.isBlank(this.student.Class_look__c)) {
             this.template.querySelector(".CMessage").innerHTML = 'Please choose a class';
             isValid = false;
         } else {
             this.template.querySelector(".CMessage").innerHTML = '';
         }  
 
-        if (this.student.Gender__c == null) {
+        if (this.isBlank(this.student.Gender__c)) {
             this.template.querySelector(".GMessage").innerHTML = 'Please choose gender';
             isValid = false;
         } else {
             this.template.querySelector(".GMessage").innerHTML = '';
         }  
-
+        
         return isValid;
     }
 

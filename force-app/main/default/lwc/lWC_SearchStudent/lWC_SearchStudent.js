@@ -31,7 +31,7 @@ export default class LWC_SearchStudent extends LightningElement {
                 console.log( 'Files loaded' );
             })
             .catch(error => {
-                console.log( error.body.message );
+                console.log( error );
         });
 
     }
@@ -57,8 +57,8 @@ export default class LWC_SearchStudent extends LightningElement {
     get genderOptions() {
         return [
             { label: '----', value: '' },
-            { label: 'Male', value: 'true' },
-            { label: 'Female', value: 'false' },
+            { label: 'Male', value: 'Male' },
+            { label: 'Female', value: 'Female' },
         ];
     }
 
@@ -72,7 +72,7 @@ export default class LWC_SearchStudent extends LightningElement {
             this.classOptions = option;         
         })
         .catch(err => {
-            alert(err.body.message);
+            alert(err);
         })
     }
 
@@ -174,7 +174,7 @@ export default class LWC_SearchStudent extends LightningElement {
             this.handlePaging();
         })
         .catch(err => {
-            alert(err.body.message)
+            alert(err.message)
             console.log(err)
         })
         this.isLoading = false;
@@ -195,7 +195,7 @@ export default class LWC_SearchStudent extends LightningElement {
         for (i; i < this.listStudent.length && this.studentToView.length < this.pageSize; i++) {
             this.listStudent[i].STT = i + 1;
             this.listStudent[i].BirthDay = this.formatDate(this.listStudent[i].BirthDay__c);
-            this.listStudent[i].Class = this.listStudent[i].Class__r.Name;
+            this.listStudent[i].Class = this.listStudent[i].Class_look__r.Name;
             this.studentToView.push(this.listStudent[i]);
         }
 
@@ -400,7 +400,7 @@ export default class LWC_SearchStudent extends LightningElement {
                 }
             });
         }catch(err){
-            alert(err.message)
+            alert(err)
         }
         
     }
@@ -434,7 +434,7 @@ export default class LWC_SearchStudent extends LightningElement {
                 }
             });
         }catch(err){
-            alert(err.message)
+            alert(err)
         }
         
     }
@@ -457,7 +457,7 @@ export default class LWC_SearchStudent extends LightningElement {
                 }
             });
         }catch(err){
-            alert(err.message)
+            alert(err)
         }
         
     }

@@ -14,7 +14,7 @@ export default class LWC_DetailStudent extends LightningModal {
                 var part = result.BirthDay__c.split("-");
                 result.BirthDay__c = part[2]+"/"+part[1]+"/"+part[0];
             }
-            result.Class = result.Class__r.Name;
+            result.Class = result.Class_look__r.Name;
 
             this.student = result;
         })

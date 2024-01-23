@@ -22,7 +22,7 @@ public with sharing class LWC_UpdateStudentCtrl {
                 Id,
                 Address__c, 
                 BirthDay__c, 
-                Class__r.Name, 
+                Class_look__r.Name, 
                 FirstName__c, 
                 Gender__c, 
                 LastName__c, 
