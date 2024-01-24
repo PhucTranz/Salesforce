@@ -17,8 +17,8 @@
         if (this.isBlank(student.FirstName__c)) {
             document.getElementById("FNMessage").innerHTML = "Please enter first name";
             isValid = false;
-        } else if (student.FirstName__c.length > 255) {
-            document.getElementById("FNMessage").innerHTML = 'First name must be less than 255 characters';
+        } else if (student.FirstName__c.length > 80) {
+            document.getElementById("FNMessage").innerHTML = 'First name must be less than 80 characters';
             isValid = false;
         } else {
             document.getElementById("FNMessage").innerHTML = '';
@@ -27,8 +27,8 @@
         if (this.isBlank(student.LastName__c)) {
             document.getElementById("LNMessage").innerHTML = 'Please enter last name';
             isValid = false;
-        } else if (student.LastName__c.length > 255) {
-            document.getElementById("LNMessage").innerHTML = 'Last name must be less than 255 characters';
+        } else if (student.LastName__c.length > 80) {
+            document.getElementById("LNMessage").innerHTML = 'Last name must be less than 80 characters';
             isValid = false;
         } else {
             document.getElementById("LNMessage").innerHTML = '';

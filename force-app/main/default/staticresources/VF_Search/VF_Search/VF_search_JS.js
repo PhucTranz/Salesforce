@@ -24,8 +24,8 @@ function validation(firstName, lastName, birthDay, address, class__c) {
     if(lastName === '' || lastName.trim() === ''){
         $(".LNMessage").html('Please enter last name');
         isValid = false;
-    }else if (lastName.length > 255){
-        $(".LNMessage").html('Last name must be less than 255 characters');
+    }else if (lastName.length > 80){
+        $(".LNMessage").html('Last name must be less than 80 characters');
         isValid = false;
     } else{
         $(".LNMessage").html('');
@@ -34,8 +34,8 @@ function validation(firstName, lastName, birthDay, address, class__c) {
     if(address === '' || address.trim() === ''){
         $(".AMessage").html('Please enter address');
         isValid = false;
-    }else if (address.length > 255){
-        $(".AMessage").html('Address must be less than 255 characters');
+    }else if (address.length > 80){
+        $(".AMessage").html('Address must be less than 80 characters');
         isValid = false;
     }else{
         $(".AMessage").html('');

@@ -65,8 +65,8 @@ export default class LWC_UpdateStudent extends LightningModal {
         if (this.isBlank(this.student.FirstName__c)) {
             this.template.querySelector(".FNMessage").innerHTML = "Please enter first name";
             isValid = false;
-        } else if (this.student.FirstName__c.length > 255) {
-            this.template.querySelector(".FNMessage").innerHTML = 'First name must be less than 255 characters';
+        } else if (this.student.FirstName__c.length > 80) {
+            this.template.querySelector(".FNMessage").innerHTML = 'First name must be less than 80 characters';
             isValid = false;
         } else {
             this.template.querySelector(".FNMessage").innerHTML = '';
@@ -75,8 +75,8 @@ export default class LWC_UpdateStudent extends LightningModal {
         if (this.isBlank(this.student.LastName__c)) {
             this.template.querySelector(".LNMessage").innerHTML = 'Please enter last name';
             isValid = false;
-        } else if (this.student.LastName__c.length > 255) {
-            this.template.querySelector(".LNMessage").innerHTML = 'Last name must be less than 255 characters';
+        } else if (this.student.LastName__c.length > 80) {
+            this.template.querySelector(".LNMessage").innerHTML = 'Last name must be less than 80 characters';
             isValid = false;
         } else {
             this.template.querySelector(".LNMessage").innerHTML = '';
