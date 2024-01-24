@@ -1,6 +1,6 @@
 public with sharing class Test_StudentBatch2 implements Database.Batchable<sObject>{
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator('SELECT Id, Class__c FROM Student__c');
+        return Database.getQueryLocator('SELECT Id, Class_look__c FROM Student__c');
     }
 
     public void execute(Database.BatchableContext bc, List<Student__c> students) {
@@ -20,9 +20,9 @@ public with sharing class Test_StudentBatch2 implements Database.Batchable<sObje
         
         if (a != null && b != null){
             for (Student__c student: students) {
-                if (student.Class__c != null) {
+                if (student.Class_look__c != null) {
                     Integer randomClass = Integer.valueOf(Math.random() * (b - a + 1)) + a;
-                    student.Class__c = mapClasses.get(randomClass);
+                    student.Class_look__c = mapClasses.get(randomClass);
                 }
             }
         }

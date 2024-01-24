@@ -5,11 +5,11 @@ public with sharing class Test_StudentTriggerHandler {
             Map<Id,Integer> classCount = new Map<Id, Integer>();
 
             for (Student__c student: students) {
-                if (classCount.containsKey(student.Class__c)) {
-                    Integer value = classCount.get(student.Class__c) + 1;
-                    classCount.put(student.Class__c, value);
+                if (classCount.containsKey(student.Class_look__c)) {
+                    Integer value = classCount.get(student.Class_look__c) + 1;
+                    classCount.put(student.Class_look__c, value);
                 } else {
-                    classCount.put(student.Class__c, 1);
+                    classCount.put(student.Class_look__c, 1);
                 }
             }
 
@@ -31,11 +31,11 @@ public with sharing class Test_StudentTriggerHandler {
             Map<Id,Integer> classCount = new Map<Id, Integer>();
 
             for (Student__c student: students) {
-                if (classCount.containsKey(student.Class__c)) {
-                    Integer value = classCount.get(student.Class__c) + 1;
-                    classCount.put(student.Class__c, value);
+                if (classCount.containsKey(student.Class_look__c)) {
+                    Integer value = classCount.get(student.Class_look__c) + 1;
+                    classCount.put(student.Class_look__c, value);
                 } else {
-                    classCount.put(student.Class__c, 1);
+                    classCount.put(student.Class_look__c, 1);
                 }
             }
 
