@@ -1,4 +1,4 @@
-public with sharing class T02_ScoreTriggerHandler {
+public without sharing class T02_ScoreTriggerHandler {
     public static void updateSubjectScore(List<Score__c> newScores) {
         try {
             //get list subjectScore Id
@@ -69,6 +69,5 @@ public with sharing class T02_ScoreTriggerHandler {
         } catch (Exception e) {
             System.debug(e);
         }
-        
     }
 }
