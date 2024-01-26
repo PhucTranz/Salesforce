@@ -1,14 +1,17 @@
 public without sharing class B02_CreateSubjectScoreBatch implements Database.Batchable<sObject>, Database.Stateful {
     Batchlog__c batchLog;
+    List<SubjectScore__c> newSubjectScores;
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         batchLog = new Batchlog__c(Name = 'B02_科目得点作成バッチ', StartTime__c =  System.now());
-        return Database.getQueryLocator('SELECT Id, FirstName__c FROM Student__c WHERE LearningStatus__c = \'Enrolled\'');
+        return Database.getQueryLocator('SELECT Id FROM Student__c WHERE LearningStatus__c = \'Enrolled\'');
     }
 
     public void execute(Database.BatchableContext bc, List<Student__c> students) {
-        List<Semester__c> semesters = [SELECT Id, Name FROM Semester__c];
-        
+        newSubjectScores = new List<SubjectScore__c>();
+        List<Semester__c> semesters = [SELECT Id FROM Semester__c];
+        List<Subject__c> subjects = [SELECT Id, CourseCredit__c FROM Subject__c];
+
         if (semesters.size() > 1) {
             for (Student__c student: students) {
                 Integer randomIndex1 = getRandomNumber(semesters.size());
@@ -19,9 +22,30 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
                 Semester__c semester1 = semesters.get(randomIndex1);
                 Semester__c semester2 = semesters.get(randomIndex2);
                 
-                courseRegistration(semester1, student);
-                courseRegistration(semester2, student);
+                courseRegistration(semester1, student, subjects);
+                courseRegistration(semester2, student, subjects);
             }
+        }
+        if (newSubjectScores.size() > 0) {
+            insert newSubjectScores;
+
+            List<String> examType = new List<String>();
+            examType.add('Progress');
+            examType.add('Practical');
+            examType.add('Midterm Exam');
+            examType.add('FinalTerm Exam');
+
+            List<Score__c> scores = new List<Score__c>();
+            for (SubjectScore__c subjectScore: newSubjectScores) {
+                for (String type: examType) {
+                    Decimal randomScore = Math.round((Math.random() * 9 + 1) * 100.0) / 100.0;
+                    Score__c score = new Score__c(SubjectScore_look__c = subjectScore.Id,
+                                                ExamType__c = type,
+                                                Score__c = randomScore);
+                    scores.add(score);
+                }
+            }
+            insert scores;
         }
     }
 
@@ -60,59 +84,21 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
         return subjectList;
     }
 
-    private void courseRegistration(Semester__c semester, Student__c student) {
-        try {
-            List<Subject__c> subjects = [SELECT Id, CourseCredit__c FROM Subject__c];
-            Decimal totalCredit = 0;
-            Decimal numberOfSubject = 0;
-            List<AggregateResult> result = [SELECT SUM(Subject_look__r.CourseCredit__c) totalCredit,
-                                            COUNT(Subject_look__c) numberOfSubject
-                                            FROM SubjectScore__c 
-                                            WHERE Student_look__c = :student.Id
-                                            AND Semester_look__c = :semester.Id
-                                            GROUP BY Student_look__c];
-            if (result.size() > 0) {
-                totalCredit = (Decimal) result.get(0).get('totalCredit');
-                numberOfSubject = (Decimal) result.get(0).get('numberOfSubject');
-            }
-            
-            List<SubjectScore__c> subjectScores = new List<SubjectScore__c>();
-            shuffle(subjects);
-            for (Integer i = 0; i < subjects.size() && numberOfSubject < 5 && totalCredit < 25; i++) {
-                if (totalCredit + subjects.get(i).CourseCredit__c <= 25) {
-                    SubjectScore__c subjectScore = new SubjectScore__c(Student_look__c = student.Id, 
-                                                                Subject_look__c = subjects.get(i).Id, 
-                                                                Semester_look__c = semester.Id);
-                    
-                    subjectScores.add(subjectScore);
-                    numberOfSubject++;
-                    totalCredit += subjects.get(i).CourseCredit__c;
-                }
+    private void courseRegistration(Semester__c semester, Student__c student, List<Subject__c> subjects) {
+        Decimal totalCredit = 0;
+        Decimal numberOfSubject = 0;
+        
+        shuffle(subjects);
+        for (Integer i = 0; i < subjects.size() && numberOfSubject < 5 && totalCredit < 25; i++) {
+            if (totalCredit + subjects.get(i).CourseCredit__c <= 25) {
+                SubjectScore__c subjectScore = new SubjectScore__c(Student_look__c = student.Id, 
+                                                            Subject_look__c = subjects.get(i).Id, 
+                                                            Semester_look__c = semester.Id);
                 
-            }
-
-            insert subjectScores;
-
-            List<String> examType = new List<String>();
-            examType.add('Progress');
-            examType.add('Practical');
-            examType.add('Midterm Exam');
-            examType.add('FinalTerm Exam');
-
-            List<Score__c> scores = new List<Score__c>();
-            for (SubjectScore__c subjectScore: subjectScores) {
-                for (String type: examType) {
-                    Decimal randomScore = Math.round((Math.random() * 9 + 1) * 100.0) / 100.0;
-                    Score__c score = new Score__c(SubjectScore_look__c = subjectScore.Id,
-                                                ExamType__c = type,
-                                                Score__c = randomScore);
-                    scores.add(score);
-                }
-            }
-            insert scores;
-            
-        } catch (Exception e) {
-            System.debug(e);
+                newSubjectScores.add(subjectScore);
+                numberOfSubject++;
+                totalCredit += subjects.get(i).CourseCredit__c;
+            } 
         }
     }
 }
