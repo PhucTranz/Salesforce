@@ -16,7 +16,7 @@ public without sharing class T01_StudentTriggerHandler {
             if (student.BirthDay__c != null) {
                 Integer currentYear = System.now().year();
                 if (currentYear - student.BirthDay__c.year() < 18) {
-                    student.BirthDay__c.addError('Student must be at least 18 years old');
+                    student.BirthDay__c.addError('学生の年齢が無効です。有効な年齢は18歳以上です。');
                 }
             } else {
                 listErr.add(' BirthDay__c');
@@ -26,7 +26,7 @@ public without sharing class T01_StudentTriggerHandler {
             }
 
             if (listErr.size() > 0) {
-                String message = 'Please enter: '+ String.join(listErr, ', ');
+                String message = '値を入力してください: '+ String.join(listErr, ', ');
                 student.addError(message);
             }
         }
@@ -52,8 +52,9 @@ public without sharing class T01_StudentTriggerHandler {
             for (Class__c cl: classes) {
                 cl.NumberOfStudent__c += classCount.get(cl.Id);
             }
-
-            update classes;
+            if (classes.size() > 0) {
+                update classes;
+            }
         } catch (Exception e) {
             System.debug(e);
         }
@@ -79,8 +80,9 @@ public without sharing class T01_StudentTriggerHandler {
             for (Class__c cl: classes) {
                 cl.NumberOfStudent__c -= classCount.get(cl.Id);
             }
-
-            update classes;
+            if (classes.size() > 0) {
+                update classes;
+            }
         } catch (Exception e) {
             System.debug(e);
         }
@@ -99,7 +101,9 @@ public without sharing class T01_StudentTriggerHandler {
             }
 
             List<SubjectScore__c> subjectScores = [SELECT Id FROM SubjectScore__c WHERE Student_look__c =: studentIds];
-            delete subjectScores;
+            if (subjectScores.size() > 0) {
+                delete subjectScores;
+            }
         } catch (Exception e) {
             System.debug(e);
         }

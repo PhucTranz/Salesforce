@@ -58,7 +58,7 @@ public without sharing class T02_ScoreTriggerHandler {
             for (SubjectScore__c subjectScore: subjectScores) {
                 Decimal avgScore = mapAvg.get(subjectScore.Id).setScale(2, System.RoundingMode.HALF_UP);
                 subjectScore.AverageScore__c = avgScore;
-                if (avgScore >= 4.95) {
+                if (avgScore >= 5) {
                     subjectScore.Status__c = 'Passed';
                 } else {
                     subjectScore.Status__c = 'Not Passed';

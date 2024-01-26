@@ -7,23 +7,26 @@ public without sharing class B01_DeleteSubjectScoreBatch implements Database.Bat
     }
 
     public void execute(Database.BatchableContext bc, List<SubjectScore__c> subjectScores) {
-        try {
-            delete subjectScores;
-        } catch (Exception e) {
-            batchLog.ErrorMessage__c = e.getMessage();
-        }
+        delete subjectScores;
     }
 
     public void finish(Database.BatchableContext bc) {
-        AsyncApexJob job = [SELECT Id, NumberOfErrors FROM AsyncApexJob WHERE Id = :bc.getJobId()];
-        if(job.NumberOfErrors > 0) {
+        try {
+            AsyncApexJob job = [SELECT Id, NumberOfErrors, ExtendedStatus FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+            if(job.NumberOfErrors > 0) {
+                batchLog.Result__c = 'Error';
+                batchLog.ErrorMessage__c = job.ExtendedStatus;
+            } else {
+                batchLog.Result__c = 'Success';
+                B02_CreateSubjectScoreBatch b = new B02_CreateSubjectScoreBatch();
+                Database.executeBatch(b);
+            }
+            batchLog.EndTime__c =  System.now();
+            insert batchLog;
+        } catch (Exception e) {
             batchLog.Result__c = 'Error';
-        } else {
-            batchLog.Result__c = 'Success';
-            B02_CreateSubjectScoreBatch b = new B02_CreateSubjectScoreBatch();
-            Database.executeBatch(b);
+            batchLog.ErrorMessage__c = e.getMessage();
+            insert batchLog;
         }
-        batchLog.EndTime__c =  System.now();
-        insert batchLog;
     }
 }
