@@ -57,8 +57,8 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
                 batchLog.ErrorMessage__c = job.ExtendedStatus;
             } else {
                 batchLog.Result__c = 'Success';
-                // B02_CreateSubjectScoreBatch b = new B02_CreateSubjectScoreBatch();
-                // Database.executeBatch(b);
+                B03_UpdateStudentScoreBatch b = new B03_UpdateStudentScoreBatch();
+                Database.executeBatch(b);
             }
             batchLog.EndTime__c =  System.now();
             insert batchLog;

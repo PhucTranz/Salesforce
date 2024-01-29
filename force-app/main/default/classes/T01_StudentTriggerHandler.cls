@@ -46,12 +46,12 @@ public without sharing class T01_StudentTriggerHandler {
                     }
                 }
             }
-
+            
             List<Class__c> classes = [SELECT Id, NumberOfStudent__c FROM Class__c WHERE Id = :classCount.keySet()];
-
             for (Class__c cl: classes) {
                 cl.NumberOfStudent__c += classCount.get(cl.Id);
             }
+            
             if (classes.size() > 0) {
                 update classes;
             }
