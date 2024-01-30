@@ -443,7 +443,7 @@ export default class LWC_SearchStudent extends LightningElement {
         try{
             detailStudent.open({
                 label: 'Detail student',
-                size: 'small',
+                size: 'large',
                 studentId: event.target.dataset.id,
                 ondetailerror: (e) => {
                     e.stopPropagation();
