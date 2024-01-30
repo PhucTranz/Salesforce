@@ -16,7 +16,19 @@ public with sharing class VF_DetailStudentCtrl {
      */
     public VF_DetailStudentCtrl() {
         String studentId = ApexPages.currentPage().getParameters().get('studentId');
-        this.student = [SELECT Address__c, BirthDay__c, Class_look__c, FirstName__c, Gender__c, LastName__c, StudentCode__c FROM Student__c WHERE Id = :studentId];
+        this.student = [SELECT Id,
+                        Address__c, 
+                        BirthDay__c, 
+                        Class_look__c, 
+                        FirstName__c, 
+                        Gender__c, 
+                        LastName__c, 
+                        StudentCode__c,
+                        LearningStatus__c,
+                        GPAScore__c,
+                        TotalCredit__c
+                        FROM Student__c 
+                        WHERE Id = :studentId];
         Class__c cl = [SELECT Name FROM Class__c WHERE Id = :student.Class_look__c];
         this.className = cl.Name;
     }

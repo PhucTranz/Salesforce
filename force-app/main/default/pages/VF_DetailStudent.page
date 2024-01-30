@@ -32,6 +32,18 @@
                 <td><apex:outputText value="{!className}"/></td>
             </tr>
             <tr>
+                <td>Learning Status: </td>
+                <td><apex:outputText value="{!student.LearningStatus__c}"/></td>
+            </tr>
+            <tr>
+                <td>GPA: </td>
+                <td><apex:outputText value="{!student.GPAScore__c}"/></td>
+            </tr>
+            <tr>
+                <td>Toatal Credit: </td>
+                <td><apex:outputText value="{!student.TotalCredit__c}"/></td>
+            </tr>
+            <tr>
                 <td>Address: </td>
                 <td><apex:outputText value="{!student.Address__c}"/></td>
             </tr>

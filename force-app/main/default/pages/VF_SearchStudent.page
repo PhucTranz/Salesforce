@@ -194,6 +194,18 @@
                                     <td><apex:outputText value="{!className}"/></td>
                                 </tr>
                                 <tr>
+                                    <td><strong>Learning Status:</strong></td>
+                                    <td><apex:outputText value="{!student.LearningStatus__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>GPA:</strong></td>
+                                    <td><apex:outputText value="{!student.GPAScore__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Credit:</strong></td>
+                                    <td><apex:outputText value="{!student.TotalCredit__c}"/></td>
+                                </tr>
+                                <tr>
                                     <td><strong>Address:</strong> </td>
                                     <td><apex:outputText value="{!student.Address__c}"/></td>
                                 </tr>
@@ -255,6 +267,17 @@
                                             <apex:selectOptions value="{!options}" />
                                         </apex:selectList>
                                         <p class="CMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-danger">*</span>Learning Status</td>
+                                    <td>
+                                        <apex:selectList value="{!student.LearningStatus__c}" size="1" id="learningStatus" styleClass="inputModal">
+                                            <apex:selectOption itemValue="Enrolled" itemLabel="Enrolled"/>
+                                            <apex:selectOption itemValue="Withdrawn" itemLabel="Withdrawn"/>  
+                                            <apex:selectOption itemValue="Graduated" itemLabel="Graduated"/>  
+                                        </apex:selectList>
+                                        <p class="SMessage text-danger"></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -326,6 +349,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td><span class="text-danger">*</span>Learning Status</td>
+                                    <td>
+                                        <apex:selectList value="{!student.LearningStatus__c}" size="1" id="learningStatus" styleClass="inputModal">
+                                            <apex:selectOption itemValue="Enrolled" itemLabel="Enrolled"/>
+                                            <apex:selectOption itemValue="Withdrawn" itemLabel="Withdrawn"/>  
+                                            <apex:selectOption itemValue="Graduated" itemLabel="Graduated"/>  
+                                        </apex:selectList>
+                                        <p class="SMessage text-danger"></p>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td><span class="text-danger">*</span>Address</td>
                                     <td>
                                         <apex:inputText value="{!student.Address__c}" id="address" styleClass="inputModal"/>
@@ -380,6 +414,10 @@
                                 <tr>
                                     <td><strong>Class Name:</strong></td>
                                     <td><apex:outputText value="{!className}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Learning Status:</strong></td>
+                                    <td><apex:outputText value="{!student.LearningStatus__c}"/></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Address:</strong> </td>

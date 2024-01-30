@@ -45,6 +45,16 @@
             </td>
         </tr>
         <tr>
+            <td>Learning Status</td>
+            <td>
+                <apex:selectList value="{!student.LearningStatus__c}" size="1" id="learningStatus" styleClass="inputModal">
+                    <apex:selectOption itemValue="Enrolled" itemLabel="Enrolled"/>
+                    <apex:selectOption itemValue="Withdrawn" itemLabel="Withdrawn"/>  
+                    <apex:selectOption itemValue="Graduated" itemLabel="Graduated"/>  
+                </apex:selectList>
+            </td>
+        </tr>
+        <tr>
             <td>Address</td>
             <td>
                 <apex:inputField value="{!student.Address__c}" id="address"/>
