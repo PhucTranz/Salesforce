@@ -7,7 +7,15 @@ export default class LWC_CreateStudent extends LightningModal {
     get options() {
         return [
             { label: 'Male', value: 'Male' },
-            { label: 'Female', value: 'Female' },
+            { label: 'Female', value: 'Female' }
+        ];
+    }
+
+    get learningStatusOptions() {
+        return [
+            { label: 'Enrolled', value: 'Enrolled' },
+            { label: 'Withdrawn', value: 'Withdrawn' },
+            { label: 'Graduated', value: 'Graduated' }
         ];
     }
 
@@ -22,14 +30,16 @@ export default class LWC_CreateStudent extends LightningModal {
         var birthDay = this.template.querySelector('.birthDay').value;
         var Class = this.template.querySelector('.class').value;
         var address = this.template.querySelector('.address').value;
+        var learningStatus = this.template.querySelector('.learningStatus').value;
 
-        if (this.validation(firstName, lastName, gender, birthDay, Class, address)){
+        if (this.validation(firstName, lastName, gender, birthDay, Class, address, learningStatus)){
             createStudent({studentJson: JSON.stringify({
                 FirstName__c: firstName, 
                 LastName__c: lastName, 
                 Gender__c: gender, 
                 BirthDay__c: birthDay, 
                 Class_look__c: Class, 
+                LearningStatus__c: learningStatus,
                 Address__c: address})})
             .then(result =>{
                 const reloadEvt = new CustomEvent('reloadstudent');
@@ -42,7 +52,7 @@ export default class LWC_CreateStudent extends LightningModal {
         }
     }
 
-    validation(firstName, lastName, gender, birthDay, Class, address) {
+    validation(firstName, lastName, gender, birthDay, Class, address, learningStatus) {
         var isValid = true;
 
         if (this.isBlank(firstName)) {
@@ -96,6 +106,13 @@ export default class LWC_CreateStudent extends LightningModal {
             isValid = false;
         } else {
             this.template.querySelector(".CMessage").innerHTML = '';
+        }  
+
+        if (this.isBlank(learningStatus)) {
+            this.template.querySelector(".SMessage").innerHTML = 'Please choose a status';
+            isValid = false;
+        } else {
+            this.template.querySelector(".SMessage").innerHTML = '';
         }  
 
         if (this.isBlank(gender)) {

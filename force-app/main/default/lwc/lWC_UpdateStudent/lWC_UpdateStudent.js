@@ -29,6 +29,14 @@ export default class LWC_UpdateStudent extends LightningModal {
         ];
     }
 
+    get learningStatusOptions() {
+        return [
+            { label: 'Enrolled', value: 'Enrolled' },
+            { label: 'Withdrawn', value: 'Withdrawn' },
+            { label: 'Graduated', value: 'Graduated' }
+        ];
+    }
+
     closeModal() {
         this.close()
     }
@@ -41,6 +49,7 @@ export default class LWC_UpdateStudent extends LightningModal {
         this.student.BirthDay__c = this.template.querySelector('.birthDay').value;
         this.student.Class_look__c = this.template.querySelector('.class').value;
         this.student.Address__c = this.template.querySelector('.address').value;
+        this.student.LearningStatus__c = this.template.querySelector('.learningStatus').value;
 
         if (this.validation()){
             updateStudent({student: this.student})
@@ -113,6 +122,13 @@ export default class LWC_UpdateStudent extends LightningModal {
             isValid = false;
         } else {
             this.template.querySelector(".CMessage").innerHTML = '';
+        }  
+
+        if (this.isBlank(this.student.LearningStatus__c)) {
+            this.template.querySelector(".SMessage").innerHTML = 'Please choose a status';
+            isValid = false;
+        } else {
+            this.template.querySelector(".SMessage").innerHTML = '';
         }  
 
         if (this.isBlank(this.student.Gender__c)) {

@@ -47,7 +47,7 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
         }
 
         for (String key: totalScoreMap.keySet()) {
-            Decimal gpa = totalScoreMap.get(key)/totalCreditMap.get(key);
+            Decimal gpa = (totalScoreMap.get(key)/totalCreditMap.get(key)).setScale(2, System.RoundingMode.HALF_UP);
             studentMap.get(key).GPAScore__c = gpa; 
             studentMap.get(key).TotalCredit__c = totalCreditMap.get(key); 
         }

@@ -26,7 +26,8 @@ public with sharing class LWC_UpdateStudentCtrl {
                 FirstName__c, 
                 Gender__c, 
                 LastName__c, 
-                StudentCode__c 
+                StudentCode__c ,
+                LearningStatus__c
                 FROM Student__c 
                 WHERE Id = :studentId
             ];

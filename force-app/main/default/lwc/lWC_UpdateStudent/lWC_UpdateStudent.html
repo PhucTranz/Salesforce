@@ -16,6 +16,8 @@
             <p class="slds-text-color_destructive BDMessage"></p>
             <lightning-combobox class="class" label="Class" options={classOptions} value={student.Class_look__c} placeholder="Select class"></lightning-combobox>
             <p class="slds-text-color_destructive CMessage"></p>
+            <lightning-combobox class="learningStatus" label="Learning Status" value={student.LearningStatus__c} options={learningStatusOptions} placeholder="Select status"></lightning-combobox>
+            <p class="slds-text-color_destructive SMessage"></p>
             <lightning-input type="text" class="address" label="Address" value={student.Address__c}></lightning-input>
             <p class="slds-text-color_destructive AMessage"></p>
         </lightning-modal-body>
