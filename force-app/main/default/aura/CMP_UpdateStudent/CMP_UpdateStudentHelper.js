@@ -80,6 +80,13 @@
             document.getElementById("CMessage").innerHTML = '';
         }  
 
+        if (this.isBlank(student.LearningStatus__c)) {
+            document.getElementById("SMessage").innerHTML = 'Please choose a status';
+            isValid = false;
+        } else {
+            document.getElementById("SMessage").innerHTML = '';
+        }  
+
         if (student.Gender__c == null) {
             document.getElementById("GMessage").innerHTML = 'Please choose gender';
             isValid = false;

@@ -6,6 +6,12 @@
     {'label': 'Male', 'value': 'Male'},
     {'label': 'Female', 'value': 'Female'}
     ]"/>
+    <aura:attribute name="learningStatusOptions" type="List" default="[
+    {'label': '----', 'value': ''},
+    {'label': 'Enrolled', 'value': 'Enrolled'},
+    {'label': 'Withdrawn', 'value': 'Withdrawn'},
+    {'label': 'Graduated', 'value': 'Graduated'}
+    ]"/>
 
     <aura:method name ="getAddModal" action="{!c.getAddModal}"/>
     
@@ -37,6 +43,12 @@
                                 </aura:iteration>
                         </lightning:select>
                         <p id="CMessage" class="slds-text-color_destructive"></p>
+                        <lightning:select label="Learning Status" value="{!v.student.LearningStatus__c}">
+                                <aura:iteration items="{!v.learningStatusOptions}" var="option">
+                                    <option value="{!option.value}">{!option.label}</option>
+                                </aura:iteration>
+                        </lightning:select>
+                        <p id="SMessage" class="slds-text-color_destructive"></p>
                         <lightning:input type="text" name="name" label="Address" value="{!v.student.Address__c}" />
                         <p id="AMessage" class="slds-text-color_destructive"></p>
                     </div>
