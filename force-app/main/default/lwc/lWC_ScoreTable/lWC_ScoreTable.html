@@ -2,50 +2,21 @@
     <div class="slds-grid">
         <div>
             <br></br>
-            <span>合計クレジット: {totalCredit}</span>
+            <span>合計クレジット: <strong>{totalCredit}</strong></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="slds-col_bump-right">
             <br></br>
-            <span>平均学分绩点: {gpa}</span>
+            <span>平均学分绩点: <strong>{gpa}</strong></span>
         </div>
         <div>
             <lightning-combobox value="" class="semester" label="" options={semesterOptions} onchange={changeSemester} placeholder="Select semester"></lightning-combobox>
         </div>
     </div>
-    <br></br>
 
-    <!-- <table class="dataTable">
-        <thead>
-            <tr class="slds-line-height_reset">
-                <th scope="col" class="slds-text-title_bold">科目コード</th>
-                <th scope="col" class="slds-text-title_bold">科目名</th>
-                <th scope="col" class="slds-text-title_bold col-sCode">クレジット</th>
-                <th scope="col" class="slds-text-title_bold col-Name">進捗点</th>
-                <th scope="col" class="slds-text-title_bold">実技点</th>
-                <th scope="col" class="slds-text-title_bold">中間試験点</th>
-                <th scope="col" class="slds-text-title_bold">期末試験点</th>
-                <th scope="col" class="slds-text-title_bold col-Action">科目平均点</th>
-            </tr>
-        </thead>
-        <tbody>
-            <template for:each={subjectScoresToView} for:item="s" for:index="index">
-                <tr key={s.Id}>
-                    <td>{s.Subject_look__r.SubjectCode__c}</td>
-                    <td>{s.Subject_look__r.Name}</td>
-                    <td>{s.Subject_look__r.CourseCredit__c}</td>
-                    <td>{s.progress}</td>
-                    <td>{s.practical}</td>
-                    <td>{s.midterm}</td>
-                    <td>{s.finnal}</td>
-                    <td class={s.Status__c}>{s.AverageScore__c}</td>
-                </tr>
-            </template>
-        </tbody>
-    </table> -->
     <template for:each={data} for:item="d" for:index="index">
         <template lwc:if={d.show}>
-            <h1 key={d.semester}>{d.semester}</h1>
+            <h1 class="title" key={d.semester}>{d.semester}</h1>
             <table class="dataTable" key={d.semester}>
                 <thead>
                     <tr class="slds-line-height_reset">
@@ -72,6 +43,12 @@
                             <td class={s.Status__c}>{s.AverageScore__c}</td>
                         </tr>
                     </template>
+                    <tr>
+                        <td colspan="2" class="noBorderRight"><strong>学期平均</strong></td>
+                        <td class="noBorderRight noBorderLeft">{d.credit}</td>
+                        <td colspan="4" class="noBorderRight noBorderLeft"></td>
+                        <td class="noBorderLeft">{d.avg}</td>
+                    </tr>
                 </tbody>
             </table>
         </template>

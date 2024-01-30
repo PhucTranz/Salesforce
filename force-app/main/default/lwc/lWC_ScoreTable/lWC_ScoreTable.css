@@ -5,3 +5,40 @@
 .semester {
     width: 200px;
 }
+
+.title {
+    color: blue;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.dataTable{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.dataTable td{
+    padding: 3px;
+    text-align: left;
+    border: 1px solid #121010;
+    text-align: center;
+}
+
+.dataTable th{
+    font-weight: 700;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #121010;
+    background-color: #ddd;
+}
+
+span {
+    font-weight: 400;
+}
+
+.noBorderLeft {
+    border-left: none !important;
+}
+
+.noBorderRight {
+    border-right: none !important;
+}
