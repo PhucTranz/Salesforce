@@ -23,17 +23,19 @@ export default class LWC_ScoreTable extends LightningElement {
                     semesters.set(e.Semester_look__r.Id, e.Semester_look__r.Name)
                     this.semesterOptions.push({ label: e.Semester_look__r.Name, value: e.Semester_look__r.Id })
                 }
-                e.Score__r.forEach(score => {
-                    if (score.ExamType__c === 'Progress') {
-                        e.progress = score.Score__c
-                    } else if (score.ExamType__c === 'Practical') {
-                        e.practical = score.Score__c
-                    } else if (score.ExamType__c === 'Midterm Exam') {
-                        e.midterm = score.Score__c
-                    } else if (score.ExamType__c === 'FinalTerm Exam') {
-                        e.finnal = score.Score__c
-                    }
-                })
+                if (e.Score__r) {
+                    e.Score__r.forEach(score => {
+                        if (score.ExamType__c === 'Progress') {
+                            e.progress = score.Score__c
+                        } else if (score.ExamType__c === 'Practical') {
+                            e.practical = score.Score__c
+                        } else if (score.ExamType__c === 'Midterm Exam') {
+                            e.midterm = score.Score__c
+                        } else if (score.ExamType__c === 'FinalTerm Exam') {
+                            e.finnal = score.Score__c
+                        }
+                    })
+                }
             })
             this.semesterOptions.sort((a, b) => {
                 return a.label.localeCompare(b.label);
@@ -44,8 +46,10 @@ export default class LWC_ScoreTable extends LightningElement {
                 var credit = 0;
                 var avg = 0;
                 subjectScores.forEach(e => {
-                    credit += e.Subject_look__r.CourseCredit__c;
-                    avg += e.AverageScore__c * e.Subject_look__r.CourseCredit__c;
+                    if (e.AverageScore__c) {
+                        credit += e.Subject_look__r.CourseCredit__c;
+                        avg += e.AverageScore__c * e.Subject_look__r.CourseCredit__c;
+                    }
                 })
                 if (credit != 0) {
                     avg = (avg/credit).toFixed(2);

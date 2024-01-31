@@ -1,5 +1,18 @@
+/**
+ * クラス名：T01_StudentTriggerHandler
+ * クラス概要：Student trigger
+ * @created：2024/01/23 Tran Dinh Phuc
+ * @modified：
+ */
 public without sharing class T01_StudentTriggerHandler {
 
+    /**
+     * beforeInsertOrUpdate
+     * @param：List<Student__c> newStudents
+     * @return：なし
+     * @created：2024/01/23 Tran Dinh Phuc
+     * @modified：
+     */
     public static void beforeInsertOrUpdate(List<Student__c> newStudents) {
         for (Student__c student : newStudents) {
             List<String> listErr = new List<String>();
@@ -32,6 +45,13 @@ public without sharing class T01_StudentTriggerHandler {
         }
     }
 
+    /**
+     * afterInsert
+     * @param：List<Student__c> newStudents
+     * @return：なし
+     * @created：2024/01/23 Tran Dinh Phuc
+     * @modified：
+     */
     public static void afterInsert(List<Student__c> newStudents) {
         try {
             Map<Id,Integer> classCount = new Map<Id, Integer>();
@@ -60,6 +80,13 @@ public without sharing class T01_StudentTriggerHandler {
         }
     }
 
+    /**
+     * afterDelete
+     * @param：List<Student__c> oldStudents
+     * @return：なし
+     * @created：2024/01/23 Tran Dinh Phuc
+     * @modified：
+     */
     public static void afterDelete(List<Student__c> oldStudents) {
         try {
             Map<Id,Integer> classCount = new Map<Id, Integer>();
@@ -88,11 +115,26 @@ public without sharing class T01_StudentTriggerHandler {
         }
     }
 
+    /**
+     * afterUpdate
+     * @param：List<Student__c> oldStudents
+     * @param：List<Student__c> newStudents
+     * @return：なし
+     * @created：2024/01/23 Tran Dinh Phuc
+     * @modified：
+     */
     public static void afterUpdate(List<Student__c> oldStudents, List<Student__c> newStudents) {
         afterDelete(oldStudents);
         afterInsert(newStudents);
     }
 
+    /**
+     * beforeDelete
+     * @param：List<Student__c> oldStudents
+     * @return：なし
+     * @created：2024/01/23 Tran Dinh Phuc
+     * @modified：
+     */
     public static void beforeDelete(List<Student__c> oldStudents) {
         try {
             List<String> studentIds = new List<String>();

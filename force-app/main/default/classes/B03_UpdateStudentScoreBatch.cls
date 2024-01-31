@@ -1,11 +1,32 @@
+/**
+ * クラス名：B03_UpdateStudentScoreBatch
+ * クラス概要：Batch update student score
+ * @created：2024/01/29 Tran Dinh Phuc
+ * @modified：
+ */
 public without sharing class B03_UpdateStudentScoreBatch implements Database.Batchable<sObject>, Database.Stateful {
     Batchlog__c batchLog;
 
+    /**
+     * start
+     * @param：Database.BatchableContext bc
+     * @return：Database.QueryLocator
+     * @created：2024/01/29 Tran Dinh Phuc
+     * @modified：
+     */
     public Database.QueryLocator start(Database.BatchableContext bc) {
         batchLog = new Batchlog__c(Name = 'B03_学生得点更新バッチ', StartTime__c =  System.now());
         return Database.getQueryLocator('SELECT Id FROM Student__c WHERE LearningStatus__c = \'Enrolled\'');
     }
 
+    /**
+     * execute
+     * @param：Database.BatchableContext bc
+     * @param: List<Student__c> students
+     * @return：なし
+     * @created：2024/01/29 Tran Dinh Phuc
+     * @modified：
+     */
     public void execute(Database.BatchableContext bc, List<Student__c> students) {
         Map<Id, Student__c> studentMap = new Map<Id, Student__c>(students);
 
@@ -21,6 +42,7 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
         Map<String, Decimal> filterSubjectScore = new Map<String, Decimal>();
         Map<String, Decimal> totalCreditMap = new Map<String, Decimal>();
         Map<String, Decimal> totalScoreMap = new Map<String, Decimal>();
+
         for (SubjectScore__c subjectScore: subjectScores) {
             String key = subjectScore.Student_look__c + '-' + subjectScore.Subject_look__c;
 
@@ -55,15 +77,24 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
         update studentMap.values();
     }
 
+    /**
+     * finish
+     * @param：Database.BatchableContext bc
+     * @return：なし
+     * @created：2024/01/29 Tran Dinh Phuc
+     * @modified：
+     */
     public void finish(Database.BatchableContext bc) {
         try {
             AsyncApexJob job = [SELECT Id, NumberOfErrors, ExtendedStatus FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+
             if(job.NumberOfErrors > 0) {
                 batchLog.Result__c = 'Error';
                 batchLog.ErrorMessage__c = job.ExtendedStatus;
             } else {
                 batchLog.Result__c = 'Success';
             }
+            
             batchLog.EndTime__c =  System.now();
             insert batchLog;
         } catch (Exception e) {

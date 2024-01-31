@@ -1,4 +1,18 @@
+/**
+ * クラス名：T02_ScoreTriggerHandler
+ * クラス概要：Score trigger
+ * @created：2024/01/24 Tran Dinh Phuc
+ * @modified：
+ */
 public without sharing class T02_ScoreTriggerHandler {
+
+    /**
+     * updateSubjectScore
+     * @param：List<Score__c> newScores
+     * @return：なし
+     * @created：2024/01/24 Tran Dinh Phuc
+     * @modified：
+     */
     public static void updateSubjectScore(List<Score__c> newScores) {
         try {
             //get list subjectScore Id
@@ -14,7 +28,7 @@ public without sharing class T02_ScoreTriggerHandler {
                                         SubjectScore_look__c
                                         FROM Score__c
                                         WHERE SubjectScore_look__c =:subjectScoreIds];
-                                        
+                       
             //get if there are all 4 types of exams
             Map<String,Integer> countScore = new Map<String,Integer>();
             List<Score__c> filteredList = new List<Score__c>();
@@ -54,6 +68,7 @@ public without sharing class T02_ScoreTriggerHandler {
                                                     Status__c 
                                                     FROM SubjectScore__c
                                                     WHERE Id = :mapAvg.keySet()];
+                                                    
             //update subjectScore
             for (SubjectScore__c subjectScore: subjectScores) {
                 Decimal avgScore = mapAvg.get(subjectScore.Id).setScale(2, System.RoundingMode.HALF_UP);

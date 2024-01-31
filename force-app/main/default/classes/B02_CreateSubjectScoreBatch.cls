@@ -1,12 +1,33 @@
+/**
+ * クラス名：B02_CreateSubjectScoreBatch
+ * クラス概要：Batch create subjectscore
+ * @created：2024/01/25 Tran Dinh Phuc
+ * @modified：
+ */
 public without sharing class B02_CreateSubjectScoreBatch implements Database.Batchable<sObject>, Database.Stateful {
     Batchlog__c batchLog;
     List<SubjectScore__c> newSubjectScores;
 
+    /**
+     * start
+     * @param：Database.BatchableContext bc
+     * @return：Database.QueryLocator
+     * @created：2024/01/25 Tran Dinh Phuc
+     * @modified：
+     */
     public Database.QueryLocator start(Database.BatchableContext bc) {
         batchLog = new Batchlog__c(Name = 'B02_科目得点作成バッチ', StartTime__c =  System.now());
         return Database.getQueryLocator('SELECT Id FROM Student__c WHERE LearningStatus__c = \'Enrolled\'');
     }
 
+    /**
+     * execute
+     * @param：Database.BatchableContext bc
+     * @param: List<Student__c> students
+     * @return：なし
+     * @created：2024/01/25 Tran Dinh Phuc
+     * @modified：
+     */
     public void execute(Database.BatchableContext bc, List<Student__c> students) {
         newSubjectScores = new List<SubjectScore__c>();
         List<Semester__c> semesters = [SELECT Id FROM Semester__c];
@@ -26,6 +47,7 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
                 courseRegistration(semester2, student, subjects);
             }
         }
+
         if (newSubjectScores.size() > 0) {
             insert newSubjectScores;
 
@@ -49,9 +71,17 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
         }
     }
 
+    /**
+     * finish
+     * @param：Database.BatchableContext bc
+     * @return：なし
+     * @created：2024/01/25 Tran Dinh Phuc
+     * @modified：
+     */
     public void finish(Database.BatchableContext bc) {
         try {
             AsyncApexJob job = [SELECT Id, NumberOfErrors, ExtendedStatus FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+            
             if(job.NumberOfErrors > 0) {
                 batchLog.Result__c = 'Error';
                 batchLog.ErrorMessage__c = job.ExtendedStatus;
@@ -60,6 +90,7 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
                 B03_UpdateStudentScoreBatch b = new B03_UpdateStudentScoreBatch();
                 Database.executeBatch(b);
             }
+
             batchLog.EndTime__c =  System.now();
             insert batchLog;
         } catch (Exception e) {
@@ -69,10 +100,24 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
         }
     }
 
+    /**
+     * getRandomNumber
+     * @param：Integer n
+     * @return：Integer
+     * @created：2024/01/25 Tran Dinh Phuc
+     * @modified：
+     */
     private Integer getRandomNumber(Integer n) {
         return (Integer) Math.floor(Math.random() * n);
     }
 
+    /**
+     * shuffle
+     * @param：list<Subject__c> subjectList
+     * @return：list<Subject__c>
+     * @created：2024/01/26 Tran Dinh Phuc
+     * @modified：
+     */
     private list<Subject__c> shuffle(list<Subject__c> subjectList) {
         for (Integer i = subjectList.size() - 1; i > 0; i--) {
             Integer j = Math.mod(Math.abs(Crypto.getRandomInteger()), i + 1);
@@ -84,6 +129,15 @@ public without sharing class B02_CreateSubjectScoreBatch implements Database.Bat
         return subjectList;
     }
 
+    /**
+     * courseRegistration
+     * @param：Semester__c semester
+     * @param：Student__c student
+     * @param：List<Subject__c> subjects
+     * @return：なし
+     * @created：2024/01/25 Tran Dinh Phuc
+     * @modified：
+     */
     private void courseRegistration(Semester__c semester, Student__c student, List<Subject__c> subjects) {
         Decimal totalCredit = 0;
         Decimal numberOfSubject = 0;
