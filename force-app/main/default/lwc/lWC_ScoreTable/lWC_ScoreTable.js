@@ -1,6 +1,5 @@
 import { api, track, LightningElement } from 'lwc';
 import getSubjectScore from '@salesforce/apex/LWC_DetailStudentCtrl.getSubjectScore';
-import getStudentByID from '@salesforce/apex/LWC_DetailStudentCtrl.getStudentByID';
 
 export default class LWC_ScoreTable extends LightningElement {
     @api studentId;

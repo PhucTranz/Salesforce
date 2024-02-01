@@ -48,7 +48,7 @@ public without sharing class B01_DeleteSubjectScoreBatch implements Database.Bat
             } else {
                 batchLog.Result__c = 'Success';
                 B02_CreateSubjectScoreBatch b = new B02_CreateSubjectScoreBatch();
-                Database.executeBatch(b);
+                Database.executeBatch(b,100);
             }
 
             batchLog.EndTime__c =  System.now();
