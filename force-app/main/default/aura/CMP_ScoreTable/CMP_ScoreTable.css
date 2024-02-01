@@ -1,0 +1,46 @@
+.THIS.dataTable{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.THIS.dataTable td{
+    padding: 3px;
+    text-align: left;
+    border: 1px solid #121010;
+    text-align: center;
+}
+
+.THIS.dataTable th{
+    font-weight: 700;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #121010;
+    background-color: #ddd;
+}
+
+.THIS.horizontal-line {
+    border-top: 1px solid #ccc; 
+    margin: 10px 0;
+}
+
+.THIS .Not {
+    color: red;
+}
+
+.THIS.title {
+    color: blue;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.THIS.horizontal-line span {
+    font-weight: 600;
+}
+
+.THIS .noBorderLeft {
+    border-left: none !important;
+}
+
+.THIS .noBorderRight {
+    border-right: none !important;
+}

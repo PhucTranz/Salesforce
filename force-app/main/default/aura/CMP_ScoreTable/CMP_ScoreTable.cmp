@@ -1,0 +1,66 @@
+<aura:component controller="CMP_DetailStudentCtrl">
+    <aura:attribute name="student" type="Student__c"/>
+    <aura:attribute name="semesterOptions" type="List" />
+    <aura:attribute name="data" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="horizontal-line slds-grid">
+        <div>
+            <br></br>
+            <span>合計クレジット: <strong>{!v.student.TotalCredit__c}</strong></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="slds-col_bump-right">
+            <br></br>
+            <span>平均学分绩点: <strong>{!v.student.GPAScore__c}</strong></span>
+        </div>
+        <div>
+            <lightning:select label="" value="" onchange="{!c.changeSemester}">
+                <aura:iteration items="{!v.semesterOptions}" var="option">
+                    <option value="{!option.value}">{!option.label}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+    </div>
+    
+    <aura:iteration items="{!v.data}" var="d">
+        <aura:if isTrue="{!d.show}">
+            <h1 class="title">{!d.semester}</h1>
+            <table class="dataTable">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col" class="slds-text-title_bold">科目コード</th>
+                        <th scope="col" class="slds-text-title_bold">科目名</th>
+                        <th scope="col" class="slds-text-title_bold">クレジット</th>
+                        <th scope="col" class="slds-text-title_bold">進捗点</th>
+                        <th scope="col" class="slds-text-title_bold">実技点</th>
+                        <th scope="col" class="slds-text-title_bold">中間試験点</th>
+                        <th scope="col" class="slds-text-title_bold">期末試験点</th>
+                        <th scope="col" class="slds-text-title_bold">科目平均点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!d.subjectScores}" var="s">
+                        <tr>
+                            <td>{!s.Subject_look__r.SubjectCode__c}</td>
+                            <td>{!s.Subject_look__r.Name}</td>
+                            <td>{!s.Subject_look__r.CourseCredit__c}</td>
+                            <td>{!s.progress}</td>
+                            <td>{!s.practical}</td>
+                            <td>{!s.midterm}</td>
+                            <td>{!s.finnal}</td>
+                            <td class="{!s.Status__c}">{!s.AverageScore__c}</td>
+                        </tr>
+                    </aura:iteration>
+                    
+                    <tr>
+                        <td colspan="2" class="noBorderRight"><strong>学期平均</strong></td>
+                        <td class="noBorderRight noBorderLeft">{!d.credit}</td>
+                        <td colspan="4" class="noBorderRight noBorderLeft"></td>
+                        <td class="noBorderLeft">{!d.avg}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </aura:if>
+    </aura:iteration>
+</aura:component>	
