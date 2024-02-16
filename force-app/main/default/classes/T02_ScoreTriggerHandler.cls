@@ -15,7 +15,6 @@ public without sharing class T02_ScoreTriggerHandler {
      */
     public static void updateSubjectScore(List<Score__c> newScores) {
         try {
-            //get list subjectScore Id
             List<String> subjectScoreIds = new List<String>();
             for (Score__c score: newScores) {
                 subjectScoreIds.add(score.SubjectScore_look__c);
@@ -28,8 +27,7 @@ public without sharing class T02_ScoreTriggerHandler {
                                         SubjectScore_look__c
                                         FROM Score__c
                                         WHERE SubjectScore_look__c =:subjectScoreIds];
-                       
-            //get if there are all 4 types of exams
+             
             Map<String,Integer> countScore = new Map<String,Integer>();
             List<Score__c> filteredList = new List<Score__c>();
             for (Score__c score: listScore) {
@@ -46,7 +44,6 @@ public without sharing class T02_ScoreTriggerHandler {
                 }
             }
 
-            //calculate average score
             Map<String,Decimal> mapAvg = new Map<String,Decimal>();
             for (Score__c score: filteredList) {
                 Decimal value = 0;
@@ -68,8 +65,7 @@ public without sharing class T02_ScoreTriggerHandler {
                                                     Status__c 
                                                     FROM SubjectScore__c
                                                     WHERE Id = :mapAvg.keySet()];
-                                                    
-            //update subjectScore
+         
             for (SubjectScore__c subjectScore: subjectScores) {
                 Decimal avgScore = mapAvg.get(subjectScore.Id).setScale(2, System.RoundingMode.HALF_UP);
                 subjectScore.AverageScore__c = avgScore;

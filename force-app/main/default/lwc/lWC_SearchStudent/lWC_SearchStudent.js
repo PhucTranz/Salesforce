@@ -172,12 +172,13 @@ export default class LWC_SearchStudent extends LightningElement {
             });
             this.listStudent = result;
             this.handlePaging();
+            this.isLoading = false;
         })
         .catch(err => {
             alert(err.message)
             console.log(err)
+            this.isLoading = false;
         })
-        this.isLoading = false;
     }
 
     search() {

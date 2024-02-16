@@ -7,17 +7,21 @@ export default class LWC_UpdateStudent extends LightningModal {
     @api classOptions;
     @api studentId;
     @track student = {};
+    isLoading = false;
 
     connectedCallback() {
+        this.isLoading = true;
         getStudentByID({studentId: this.studentId})
         .then(result => {
             this.student = result;
+            this.isLoading = false;
         })
         .catch(err => {
             const errEvt = new CustomEvent('updateerror', {
                 detail: { msg: 'Student not exist or something error' }
             });
             this.dispatchEvent(errEvt);
+            this.isLoading = false;
             this.closeModal();
         })
     }
