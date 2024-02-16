@@ -5,8 +5,10 @@ import getStudentByID from '@salesforce/apex/LWC_DetailStudentCtrl.getStudentByI
 export default class LWC_DetailStudent extends LightningModal {
     @api studentId;
     @track student = {};
+    isLoading = false;
 
     connectedCallback() {
+        this.isLoading = true;
         getStudentByID({studentId: this.studentId})
         .then(result => {
 
@@ -17,14 +19,17 @@ export default class LWC_DetailStudent extends LightningModal {
             result.Class = result.Class_look__r.Name;
 
             this.student = result;
+            this.isLoading = false;
         })
         .catch(err => {
             const errEvt = new CustomEvent('detailerror', {
                 detail: { msg: 'Student not exist or something error' }
             });
             this.dispatchEvent(errEvt);
+            this.isLoading = false;
             this.closeModal();
         })
+        
     }
 
     closeModal() {
