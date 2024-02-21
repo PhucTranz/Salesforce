@@ -55,7 +55,7 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
             Decimal credit = subjectScore.Subject_look__r.CourseCredit__c;
             if (filterSubjectScore.containsKey(key)) {
                 if (filterSubjectScore.get(key) < subjectScore.AverageScore__c) {
-                    Decimal totalScore = totalScoreMap.get(subjectScore.Student_look__c) - (filterSubjectScore.get(key) - subjectScore.AverageScore__c)*credit;
+                    Decimal totalScore = totalScoreMap.get(subjectScore.Student_look__c) - (filterSubjectScore.get(key) - subjectScore.AverageScore__c) * credit;
                     totalScoreMap.put(subjectScore.Student_look__c, totalScore);
                     filterSubjectScore.put(key, subjectScore.AverageScore__c);
                 }
@@ -63,13 +63,13 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
                 filterSubjectScore.put(key,subjectScore.AverageScore__c);
                 Decimal totalCredit = totalCreditMap.get(subjectScore.Student_look__c) + credit;
                 totalCreditMap.put(subjectScore.Student_look__c, totalCredit);
-                Decimal totalScore = totalScoreMap.get(subjectScore.Student_look__c) + subjectScore.AverageScore__c*credit;
+                Decimal totalScore = totalScoreMap.get(subjectScore.Student_look__c) + subjectScore.AverageScore__c * credit;
                 totalScoreMap.put(subjectScore.Student_look__c, totalScore);
             }
         }
 
         for (String key: totalScoreMap.keySet()) {
-            Decimal gpa = (totalScoreMap.get(key)/totalCreditMap.get(key)).setScale(2, System.RoundingMode.HALF_UP);
+            Decimal gpa = (totalScoreMap.get(key) / totalCreditMap.get(key)).setScale(2, System.RoundingMode.HALF_UP);
             studentMap.get(key).GPAScore__c = gpa; 
             studentMap.get(key).TotalCredit__c = totalCreditMap.get(key); 
         }
