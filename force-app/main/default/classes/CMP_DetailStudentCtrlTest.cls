@@ -21,7 +21,7 @@ private class CMP_DetailStudentCtrlTest {
         System.assertEquals(student.Id, result.Id);
     }
 
-    @isTest
+    @IsTest
     static void testGetStudentByID_Exception() {
         Test.startTest();
         try {
