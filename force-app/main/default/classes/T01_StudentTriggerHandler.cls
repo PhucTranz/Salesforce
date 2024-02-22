@@ -18,13 +18,13 @@ public without sharing class T01_StudentTriggerHandler {
             List<String> listErr = new List<String>();
             
             if (String.isBlank(student.LastName__c)) {
-                listErr.add(' LastName__c');
+                listErr.add('LastName__c');
             }
             if (String.isBlank(student.FirstName__c)) {
-                listErr.add(' FirstName__c');
+                listErr.add('FirstName__c');
             }
             if (String.isBlank(student.Class_look__c)) {
-                listErr.add(' Class_look__c');
+                listErr.add('Class_look__c');
             }
             if (student.BirthDay__c != null) {
                 Integer currentYear = System.now().year();
@@ -32,10 +32,10 @@ public without sharing class T01_StudentTriggerHandler {
                     student.BirthDay__c.addError('学生の年齢が無効です。有効な年齢は18歳以上です。');
                 }
             } else {
-                listErr.add(' BirthDay__c');
+                listErr.add('BirthDay__c');
             }
             if (String.isBlank(student.Gender__c)) {
-                listErr.add(' Gender__c');
+                listErr.add('Gender__c');
             }
 
             if (listErr.size() > 0) {
