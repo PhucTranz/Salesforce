@@ -33,14 +33,7 @@ public with sharing class LWC_SearchStudentCtrl {
 
     /**
      * searchCondition
-     * @param：String searchByName
-     * @param：String searchByClass
-     * @param：String searchByStudentCode
-     * @param：String searchByGender
-     * @param：Date searchByBirthday
-     * @param：Integer searchByYear
-     * @param：Integer searchByMonth
-     * @param：Integer searchByDay
+     * @param：String searchJSON
      * @return：List<Student__c>
      * @created：2024/01/08 Tran Dinh Phuc
      * @modified：

@@ -39,29 +39,6 @@ public with sharing class LWC_DetailStudentCtrl {
     }
 
     /**
-     * getListSemester
-     * @param：なし
-     * @return：List<Semester__c>
-     * @created：2024/01/30 Tran Dinh Phuc
-     * @modified：
-     */
-    @AuraEnabled
-    public static List<Semester__c> getListSemester(){
-        try {
-            return 
-                [
-                    SELECT 
-                    ID,
-                    Name 
-                    FROM Semester__c 
-                    ORDER BY Name ASC
-                ];
-        } catch (Exception e) {
-            throw new CustomException(e.getMessage());
-        }
-    }
-
-    /**
      * getSubjectScore
      * @param：String studentId
      * @return：List<SubjectScore__c>

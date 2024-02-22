@@ -1,5 +1,5 @@
 @IsTest
-private class CMP_SearchStudentCtrlTest {
+private class LWC_SearchStudentCtrlTest {
     @IsTest
     private static void testSearchByName() {
         Class__c cl = new Class__c();
@@ -19,7 +19,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('Student', '', '', '', null, 0, 0, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByName": "Student"}');
         Test.stopTest();
 
         System.assertEquals(10, listStudent.size()); 
@@ -44,7 +44,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', cl.Id, '', '', null, 0, 0, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByClass": "'+cl.Id+'"}');
         Test.stopTest();
 
         if (listStudent.size() > 0) {
@@ -75,7 +75,7 @@ private class CMP_SearchStudentCtrlTest {
         students = [SELECT Id, StudentCode__c FROM Student__c];
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', students[0].StudentCode__c, '', null, 0, 0, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByStudentCode": "'+students[0].StudentCode__c+'"}');
         Test.stopTest();
 
         if (listStudent.size() > 0) {
@@ -115,7 +115,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', 'Male', null, 0, 0, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByGender": "Male"}');
         Test.stopTest();
 
         System.assertEquals(3, listStudent.size()); 
@@ -151,7 +151,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', Date.valueOf('2003-11-23'), 0, 0, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByBirthday": "2003-11-23"}');
         Test.stopTest();
 
         System.assertEquals(7, listStudent.size()); 
@@ -187,7 +187,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', null, 2003, 0, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByYear": 2003}');
         Test.stopTest();
 
         System.assertEquals(7, listStudent.size()); 
@@ -223,7 +223,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', null, 0, 11, 0);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByMonth": 11}');
         Test.stopTest();
 
         System.assertEquals(3, listStudent.size()); 
@@ -259,7 +259,7 @@ private class CMP_SearchStudentCtrlTest {
         insert students;
 
         Test.startTest();
-        List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', null, 0, 0, 2);
+        List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByDay": 2}');
         Test.stopTest();
 
         System.assertEquals(3, listStudent.size()); 
@@ -273,81 +273,13 @@ private class CMP_SearchStudentCtrlTest {
         insert classes;
 
         Test.startTest();
-        List<Class__c> result = CMP_SearchStudentCtrl.getListClass();
+        List<Class__c> result = LWC_SearchStudentCtrl.getListClass();
         Test.stopTest();
 
         System.assertEquals(2, result.size());
         for (Integer i = 0; i < classes.size(); i++) {
             System.assertEquals(classes.get(i).Id, result.get(i).Id);
         }
-    }
-
-    @IsTest
-    private static void testGetStudentById() {
-        Class__c cl = new Class__c();
-        insert cl;
-
-        Student__c student = new Student__c(
-            FirstName__c = 'Student',
-            LastName__c = 'Test',
-            Class_look__c = cl.Id,
-            Gender__c = 'Male',
-            BirthDay__c = Date.valueOf('2002-11-23')
-        );
-        insert student;
-
-        Test.startTest();
-        Student__c result = CMP_SearchStudentCtrl.getStudentByID(student.Id);
-        Test.stopTest();
-
-        System.assertEquals(student.Id, result.Id);
-    }
-
-    @IsTest
-    private static void testGetStudentByID_Exception() {
-        Test.startTest();
-        try {
-            Student__c result = CMP_SearchStudentCtrl.getStudentByID('invalidId');
-        } catch (Exception e) {
-            System.assert(true, e.getMessage());
-        }
-        Test.stopTest();
-    }
-
-    @IsTest
-    private static void testDelStudentById() {
-        Class__c cl = new Class__c();
-        insert cl;
-
-        Student__c student = new Student__c(
-            FirstName__c = 'Student',
-            LastName__c = 'Test',
-            Class_look__c = cl.Id,
-            Gender__c = 'Male',
-            BirthDay__c = Date.valueOf('2002-11-23')
-        );
-        insert student;
-
-        Test.startTest();
-        CMP_SearchStudentCtrl.delStudentByID(student.Id);
-        Test.stopTest();
-
-        try {
-            Student__c result = [SELECT Id FROM Student__c WHERE Id =: student.Id];
-        } catch (Exception e) {
-            System.assert(true);
-        }
-    }
-
-    @IsTest
-    private static void testDelStudentById_Exception() {
-        Test.startTest();
-        try {
-            CMP_SearchStudentCtrl.delStudentByID('invalidId');
-        } catch (Exception e) {
-            System.assert(true);
-        }
-        Test.stopTest();
     }
 
     @IsTest
@@ -374,18 +306,10 @@ private class CMP_SearchStudentCtrlTest {
         }
 
         Test.startTest();
-        CMP_SearchStudentCtrl.delSelectedStudent(studentCodeList);
+        LWC_SearchStudentCtrl.delSelectedStudent(studentCodeList);
         Test.stopTest();
 
         List<Student__c> result = [SELECT Id FROM Student__c];
         System.assertEquals(0, result.size());
-    }
-
-    @isTest
-    private static void testConstructor() {
-        Test.startTest();
-        CMP_SearchStudentCtrl ctrl = new CMP_SearchStudentCtrl();
-        Test.stopTest();
-        System.assert(true);
     }
 }

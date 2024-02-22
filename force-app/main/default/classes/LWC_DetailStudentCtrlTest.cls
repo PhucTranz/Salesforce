@@ -1,5 +1,5 @@
 @IsTest
-private class CMP_DetailStudentCtrlTest {
+private class LWC_DetailStudentCtrlTest {
     @IsTest
     private static void testGetStudentById() {
         Class__c cl = new Class__c();
@@ -15,7 +15,7 @@ private class CMP_DetailStudentCtrlTest {
         insert student;
 
         Test.startTest();
-        Student__c result = CMP_DetailStudentCtrl.getStudentByID(student.Id);
+        Student__c result = LWC_DetailStudentCtrl.getStudentByID(student.Id);
         Test.stopTest();
 
         System.assertEquals(student.Id, result.Id);
@@ -25,7 +25,7 @@ private class CMP_DetailStudentCtrlTest {
     private static void testGetStudentByID_Exception() {
         Test.startTest();
         try {
-            Student__c result = CMP_DetailStudentCtrl.getStudentByID('invalidId');
+            Student__c result = LWC_DetailStudentCtrl.getStudentByID('invalidId');
         } catch (Exception e) {
             System.assert(true, e.getMessage());
         }
@@ -63,17 +63,9 @@ private class CMP_DetailStudentCtrlTest {
         insert score;
 
         Test.startTest();
-        List<SubjectScore__c> result = CMP_DetailStudentCtrl.getSubjectScore(student.Id);
+        List<SubjectScore__c> result = LWC_DetailStudentCtrl.getSubjectScore(student.Id);
         Test.stopTest();
 
         System.assertEquals(1, result.size());
-    }
-
-    @isTest
-    private static void testConstructor() {
-        Test.startTest();
-        CMP_DetailStudentCtrl ctrl = new CMP_DetailStudentCtrl();
-        Test.stopTest();
-        System.assert(true);
     }
 }

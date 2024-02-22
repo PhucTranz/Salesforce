@@ -1,5 +1,5 @@
 @IsTest
-private class CMP_UpdateStudentCtrlTest {
+private class LWC_UpdateStudentCtrlTest {
     @IsTest
     private static void testGetStudentById() {
         Class__c cl = new Class__c();
@@ -15,7 +15,7 @@ private class CMP_UpdateStudentCtrlTest {
         insert student;
 
         Test.startTest();
-        Student__c result = CMP_UpdateStudentCtrl.getStudentByID(student.Id);
+        Student__c result = LWC_UpdateStudentCtrl.getStudentByID(student.Id);
         Test.stopTest();
 
         System.assertEquals(student.Id, result.Id);
@@ -25,7 +25,7 @@ private class CMP_UpdateStudentCtrlTest {
     private static void testGetStudentByID_Exception() {
         Test.startTest();
         try {
-            Student__c result = CMP_UpdateStudentCtrl.getStudentByID('invalidId');
+            Student__c result = LWC_UpdateStudentCtrl.getStudentByID('invalidId');
         } catch (Exception e) {
             System.assert(true, e.getMessage());
         }
@@ -48,7 +48,7 @@ private class CMP_UpdateStudentCtrlTest {
         student.FirstName__c = 'Phuc';
 
         Test.startTest();
-        CMP_UpdateStudentCtrl.updateStudent(student);
+        LWC_UpdateStudentCtrl.updateStudent(student);
         Test.stopTest();
 
         Student__c result = [SELECT Id, FirstName__c FROM Student__c WHERE Id =: student.Id];
@@ -72,7 +72,7 @@ private class CMP_UpdateStudentCtrlTest {
 
         Test.startTest();
         try {
-            CMP_UpdateStudentCtrl.updateStudent(student);
+            LWC_UpdateStudentCtrl.updateStudent(student);
         } catch (Exception e) {
             System.assert(true, e.getMessage());
         }
@@ -96,18 +96,10 @@ private class CMP_UpdateStudentCtrlTest {
         
         Test.startTest();
         try {
-            CMP_UpdateStudentCtrl.updateStudent(student);
+            LWC_UpdateStudentCtrl.updateStudent(student);
         } catch (Exception e) {
             System.assert(true, e.getMessage());
         }
         Test.stopTest();
-    }
-
-    @IsTest
-    private static void testConstructor() {
-        Test.startTest();
-        CMP_UpdateStudentCtrl ctrl = new CMP_UpdateStudentCtrl();
-        Test.stopTest();
-        System.assert(true);
     }
 }
