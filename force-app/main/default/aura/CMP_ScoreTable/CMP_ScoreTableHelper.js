@@ -31,6 +31,15 @@
                     }
                 })
                 semesterOptions.sort((a, b) => {
+                    var label1 = a.label.split(', ');
+                    var label2 = b.label.split(', ');
+                    if (label1.length == 2 && label2.length == 2) {
+                        if (label1[1].localeCompare(label2[1]) > 0) {
+                            return 1;
+                        } else if (label1[1].localeCompare(label2[1]) < 0) {
+                            return -1;
+                        }
+                    }
                     return a.label.localeCompare(b.label);
                 });
 
@@ -50,6 +59,15 @@
                     data.push({show: true, subjectScores, semester: semesters.get(key), id: key, avg, credit})
                 }
                 data.sort((a, b) => {
+                    var semester1 = a.semester.split(', ');
+                    var semester2 = b.semester.split(', ');
+                    if (semester1.length == 2 && semester2.length == 2) {
+                        if (semester1[1].localeCompare(semester2[1]) > 0) {
+                            return 1;
+                        } else if (semester1[1].localeCompare(semester2[1]) < 0) {
+                            return -1;
+                        }
+                    }
                     return a.semester.localeCompare(b.semester);
                 });
                 component.set('v.semesterOptions',semesterOptions);
