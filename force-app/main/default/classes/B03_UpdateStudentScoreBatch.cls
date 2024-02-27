@@ -6,6 +6,7 @@
  */
 public without sharing class B03_UpdateStudentScoreBatch implements Database.Batchable<sObject>, Database.Stateful {
     Batchlog__c batchLog;
+    @TestVisible Boolean testException = false;
 
     /**
      * start
@@ -86,6 +87,9 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
      */
     public void finish(Database.BatchableContext bc) {
         try {
+            if (testException) {
+                throw new CustomException('Test error message');
+            }
             AsyncApexJob job = [SELECT Id, NumberOfErrors, ExtendedStatus FROM AsyncApexJob WHERE Id = :bc.getJobId()];
 
             if(job.NumberOfErrors > 0) {
@@ -103,4 +107,6 @@ public without sharing class B03_UpdateStudentScoreBatch implements Database.Bat
             insert batchLog;
         }
     }
+    
+    public class CustomException extends Exception {}
 }

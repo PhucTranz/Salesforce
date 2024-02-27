@@ -6,7 +6,7 @@
  */
 public without sharing class B01_DeleteSubjectScoreBatch implements Database.Batchable<sObject>, Database.Stateful {
     Batchlog__c batchLog;
-    
+    @TestVisible Boolean testException = false;
     /**
      * start
      * @param：Database.BatchableContext bc
@@ -40,6 +40,9 @@ public without sharing class B01_DeleteSubjectScoreBatch implements Database.Bat
      */
     public void finish(Database.BatchableContext bc) {
         try {
+            if (testException) {
+                throw new CustomException('Test error message');
+            }
             AsyncApexJob job = [SELECT Id, NumberOfErrors, ExtendedStatus FROM AsyncApexJob WHERE Id = :bc.getJobId()];
             
             if(job.NumberOfErrors > 0) {
@@ -59,4 +62,6 @@ public without sharing class B01_DeleteSubjectScoreBatch implements Database.Bat
             insert batchLog;
         }
     }
+
+    public class CustomException extends Exception {}
 }
