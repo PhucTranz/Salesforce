@@ -6,7 +6,7 @@ private class CMP_CreateStudentCtrlTest {
         Student__c student = CMP_CreateStudentCtrl.init();
         Test.stopTest();
 
-        System.assertNotEquals(null, student);
+        Assert.areNotEqual(null, student);
     }
 
     @IsTest
@@ -26,8 +26,8 @@ private class CMP_CreateStudentCtrlTest {
         CMP_CreateStudentCtrl.createStudent(student);
         Test.stopTest();
 
-        Student__c result = [SELECT Id FROM Student__c WHERE Id =: student.Id];
-        System.assertEquals(student.Id, result.Id);
+        Student__c result = [SELECT Id, FirstName__c FROM Student__c WHERE Id =: student.Id];
+        Assert.areEqual(student.FirstName__c, result.FirstName__c);
     }
 
     @IsTest
@@ -42,13 +42,16 @@ private class CMP_CreateStudentCtrlTest {
             BirthDay__c = Date.valueOf('2002-11-23')
         );
 
+        Boolean error = false;
         Test.startTest();
         try {
             CMP_CreateStudentCtrl.createStudent(student);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -63,13 +66,16 @@ private class CMP_CreateStudentCtrlTest {
             BirthDay__c = Date.valueOf('2002-11-23')
         );
 
+        Boolean error = false;
         Test.startTest();
         try {
             CMP_CreateStudentCtrl.createStudent(student);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -77,6 +83,6 @@ private class CMP_CreateStudentCtrlTest {
         Test.startTest();
         CMP_CreateStudentCtrl ctrl = new CMP_CreateStudentCtrl();
         Test.stopTest();
-        System.assert(true);
+        Assert.isTrue(true);
     }
 }

@@ -22,7 +22,7 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('Student', '', '', '', null, 0, 0, 0);
         Test.stopTest();
 
-        System.assertEquals(10, listStudent.size()); 
+        Assert.areEqual(10, listStudent.size()); 
     }
 
     @IsTest
@@ -47,11 +47,8 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', cl.Id, '', '', null, 0, 0, 0);
         Test.stopTest();
 
-        if (listStudent.size() > 0) {
-            System.assertEquals(cl.Id, listStudent.get(0).Class_look__c); 
-        } else {
-            System.assert(false);
-        } 
+        Assert.areEqual(10, listStudent.size());
+        Assert.areEqual(cl.Id, listStudent.get(0).Class_look__c);
     }
 
     @IsTest
@@ -78,11 +75,8 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', students[0].StudentCode__c, '', null, 0, 0, 0);
         Test.stopTest();
 
-        if (listStudent.size() > 0) {
-            System.assertEquals(students[0].StudentCode__c, listStudent.get(0).StudentCode__c); 
-        } else {
-            System.assert(false);
-        }
+        Assert.areEqual(1, listStudent.size());
+        Assert.areEqual(students[0].StudentCode__c, listStudent.get(0).StudentCode__c); 
     }
 
     @IsTest
@@ -118,7 +112,7 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', 'Male', null, 0, 0, 0);
         Test.stopTest();
 
-        System.assertEquals(3, listStudent.size()); 
+        Assert.areEqual(3, listStudent.size()); 
     }
 
     @IsTest
@@ -154,7 +148,7 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', Date.valueOf('2003-11-23'), 0, 0, 0);
         Test.stopTest();
 
-        System.assertEquals(7, listStudent.size()); 
+        Assert.areEqual(7, listStudent.size()); 
     }
 
     @IsTest
@@ -190,7 +184,7 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', null, 2003, 0, 0);
         Test.stopTest();
 
-        System.assertEquals(7, listStudent.size()); 
+        Assert.areEqual(7, listStudent.size()); 
     }
 
     @IsTest
@@ -226,7 +220,7 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', null, 0, 11, 0);
         Test.stopTest();
 
-        System.assertEquals(3, listStudent.size()); 
+        Assert.areEqual(3, listStudent.size()); 
     }
 
     @IsTest
@@ -262,7 +256,7 @@ private class CMP_SearchStudentCtrlTest {
         List<Student__c> listStudent= CMP_SearchStudentCtrl.getAllStudent('', '', '', '', null, 0, 0, 2);
         Test.stopTest();
 
-        System.assertEquals(3, listStudent.size()); 
+        Assert.areEqual(3, listStudent.size()); 
     }
 
     @IsTest
@@ -276,10 +270,9 @@ private class CMP_SearchStudentCtrlTest {
         List<Class__c> result = CMP_SearchStudentCtrl.getListClass();
         Test.stopTest();
 
-        System.assertEquals(2, result.size());
-        for (Integer i = 0; i < classes.size(); i++) {
-            System.assertEquals(classes.get(i).Id, result.get(i).Id);
-        }
+        classes = [SELECT Id FROM Class__c ORDER BY ClassCode__c ASC];
+        Assert.areEqual(classes.size(), result.size());
+        Assert.areEqual(classes[1].Id, result[1].Id);
     }
 
     @IsTest
@@ -300,18 +293,21 @@ private class CMP_SearchStudentCtrlTest {
         Student__c result = CMP_SearchStudentCtrl.getStudentByID(student.Id);
         Test.stopTest();
 
-        System.assertEquals(student.Id, result.Id);
+        Assert.areEqual(student.Id, result.Id);
     }
 
     @IsTest
     private static void testGetStudentByID_Exception() {
+        Boolean error = false;
         Test.startTest();
         try {
             Student__c result = CMP_SearchStudentCtrl.getStudentByID('invalidId');
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -332,22 +328,27 @@ private class CMP_SearchStudentCtrlTest {
         CMP_SearchStudentCtrl.delStudentByID(student.Id);
         Test.stopTest();
 
+        Boolean deleteSuccess = false;
         try {
             Student__c result = [SELECT Id FROM Student__c WHERE Id =: student.Id];
         } catch (Exception e) {
-            System.assert(true);
+            deleteSuccess = true;
         }
+        Assert.isTrue(deleteSuccess);
     }
 
     @IsTest
     private static void testDelStudentById_Exception() {
+        Boolean error = false;
         Test.startTest();
         try {
             CMP_SearchStudentCtrl.delStudentByID('invalidId');
         } catch (Exception e) {
-            System.assert(true);
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -378,7 +379,7 @@ private class CMP_SearchStudentCtrlTest {
         Test.stopTest();
 
         List<Student__c> result = [SELECT Id FROM Student__c];
-        System.assertEquals(0, result.size());
+        Assert.areEqual(0, result.size());
     }
 
     @isTest
@@ -386,6 +387,6 @@ private class CMP_SearchStudentCtrlTest {
         Test.startTest();
         CMP_SearchStudentCtrl ctrl = new CMP_SearchStudentCtrl();
         Test.stopTest();
-        System.assert(true);
+        Assert.isTrue(true);
     }
 }

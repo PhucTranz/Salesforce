@@ -18,18 +18,21 @@ private class CMP_DetailStudentCtrlTest {
         Student__c result = CMP_DetailStudentCtrl.getStudentByID(student.Id);
         Test.stopTest();
 
-        System.assertEquals(student.Id, result.Id);
+        Assert.areEqual(student.FirstName__c, result.FirstName__c);
     }
 
     @IsTest
     private static void testGetStudentByID_Exception() {
+        Boolean error = false;
         Test.startTest();
         try {
             Student__c result = CMP_DetailStudentCtrl.getStudentByID('invalidId');
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -66,7 +69,13 @@ private class CMP_DetailStudentCtrlTest {
         List<SubjectScore__c> result = CMP_DetailStudentCtrl.getSubjectScore(student.Id);
         Test.stopTest();
 
-        System.assertEquals(1, result.size());
+        List<SubjectScore__c> subjecScores = [SELECT Id, Subject_look__r.Name 
+                                                FROM SubjectScore__c 
+                                                WHERE Student_look__c = :student.Id
+                                                ORDER BY Subject_look__r.Name];
+
+        Assert.areEqual(subjecScores.size(), result.size());
+        Assert.areEqual(subjecScores[0].Subject_look__r.Name, result[0].Subject_look__r.Name);
     }
 
     @isTest
@@ -74,6 +83,6 @@ private class CMP_DetailStudentCtrlTest {
         Test.startTest();
         CMP_DetailStudentCtrl ctrl = new CMP_DetailStudentCtrl();
         Test.stopTest();
-        System.assert(true);
+        Assert.isTrue(true);
     }
 }

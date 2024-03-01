@@ -18,18 +18,21 @@ private class LWC_UpdateStudentCtrlTest {
         Student__c result = LWC_UpdateStudentCtrl.getStudentByID(student.Id);
         Test.stopTest();
 
-        System.assertEquals(student.Id, result.Id);
+        Assert.areEqual(student.Id, result.Id);
     }
 
     @isTest
     private static void testGetStudentByID_Exception() {
+        Boolean error = false;
         Test.startTest();
         try {
             Student__c result = LWC_UpdateStudentCtrl.getStudentByID('invalidId');
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+        
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -52,7 +55,7 @@ private class LWC_UpdateStudentCtrlTest {
         Test.stopTest();
 
         Student__c result = [SELECT Id, FirstName__c FROM Student__c WHERE Id =: student.Id];
-        System.assertEquals('Phuc', result.FirstName__c);
+        Assert.areEqual('Phuc', result.FirstName__c);
     }
 
     @IsTest
@@ -70,13 +73,16 @@ private class LWC_UpdateStudentCtrlTest {
         insert student;
         student.FirstName__c = '';
 
+        Boolean error = false;
         Test.startTest();
         try {
             LWC_UpdateStudentCtrl.updateStudent(student);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -94,12 +100,15 @@ private class LWC_UpdateStudentCtrlTest {
         insert student;
         student.LastName__c = '';
         
+        Boolean error = false;
         Test.startTest();
         try {
             LWC_UpdateStudentCtrl.updateStudent(student);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 }

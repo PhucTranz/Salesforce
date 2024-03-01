@@ -45,8 +45,8 @@ private class T02_ScoreTriggerHandlerTest {
         Test.stopTest();
 
         subjectScore = [SELECT Id, Status__c, AverageScore__c FROM SubjectScore__c WHERE Id =: subjectScore.Id];
-        System.assertEquals(3.18, subjectScore.AverageScore__c);
-        System.assertEquals('Not Passed', subjectScore.Status__c);
+        Assert.areEqual(3.18, subjectScore.AverageScore__c);
+        Assert.areEqual('Not Passed', subjectScore.Status__c);
     }
 
     @IsTest
@@ -94,7 +94,7 @@ private class T02_ScoreTriggerHandlerTest {
         Test.stopTest();
 
         subjectScore = [SELECT Id, Status__c, AverageScore__c FROM SubjectScore__c WHERE Id =: subjectScore.Id];
-        System.assertEquals(5.5, subjectScore.AverageScore__c);
-        System.assertEquals('Passed', subjectScore.Status__c);
+        Assert.areEqual(5.5, subjectScore.AverageScore__c);
+        Assert.areEqual('Passed', subjectScore.Status__c);
     }
 }

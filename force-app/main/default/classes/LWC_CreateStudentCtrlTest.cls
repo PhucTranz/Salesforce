@@ -15,8 +15,9 @@ private class LWC_CreateStudentCtrlTest {
         LWC_CreateStudentCtrl.createStudent(studentJson);
         Test.stopTest();
 
-        List<Student__c> result = [SELECT Id FROM Student__c];
-        System.assertEquals(1, result.size());
+        List<Student__c> result = [SELECT Id, FirstName__c FROM Student__c WHERE Class_look__c = :cl.Id];
+        Assert.areEqual(1, result.size());
+        Assert.areEqual('Student', result[0].FirstName__c);
     }
 
     @IsTest
@@ -29,13 +30,17 @@ private class LWC_CreateStudentCtrlTest {
                                 '","Gender__c":"Male",'+
                                 '"BirthDay__c":"2002-11-23"}';
 
+        Boolean error = false;
+
         Test.startTest();
         try {
             LWC_CreateStudentCtrl.createStudent(studentJson);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -48,12 +53,16 @@ private class LWC_CreateStudentCtrlTest {
                                 '","Gender__c":"Male",'+
                                 '"BirthDay__c":"2002-11-23"}';
 
+        Boolean error = false;
+
         Test.startTest();
         try {
             LWC_CreateStudentCtrl.createStudent(studentJson);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 }

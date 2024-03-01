@@ -12,12 +12,11 @@ private class VF_CreateStudentCtrlTest {
         List<SelectOption> listSelectOptions = ctrl.getOptions();
         Test.stopTest();
 
-        listClass = [SELECT Id, Name FROM Class__c];
-        System.assertEquals(listClass.size(), listSelectOptions.size(), 'Number of options should match number of test classes');
-        for (Integer i = 0; i < listClass.size(); i++) {
-            System.assertEquals(listClass[i].Id, listSelectOptions[i].getValue(), 'Option value should match class Id');
-            System.assertEquals(listClass[i].Name, listSelectOptions[i].getLabel(), 'Option label should match class Name');
-        }
+        listClass = [SELECT Id, Name FROM Class__c ORDER BY ClassCode__c ASC];
+        Assert.areEqual(listClass.size(), listSelectOptions.size());
+        Assert.areEqual(2, listSelectOptions.size());
+        Assert.areEqual(listClass[0].Id, listSelectOptions[0].getValue());
+        Assert.areEqual(listClass[0].Name, listSelectOptions[0].getLabel());
     }
 
     @IsTest
@@ -39,8 +38,10 @@ private class VF_CreateStudentCtrlTest {
         PageReference result = ctrl.createStudent();
         Test.stopTest();
 
+        Student__c st = [SELECT Id, FirstName__c FROM Student__c WHERE Id =: student.Id];
+        Assert.areEqual(student.FirstName__c, st.FirstName__c);
         String url = '/apex/VF_DetailStudent?studentId=' + student.Id;
-        System.assertEquals(url, result.getUrl());
+        Assert.areEqual(url, result.getUrl());
     }
 
     @IsTest
@@ -60,6 +61,6 @@ private class VF_CreateStudentCtrlTest {
         PageReference result = ctrl.createStudent();
         Test.stopTest();
 
-        System.assertEquals(null, result);
+        Assert.areEqual(null, result);
     }
 }

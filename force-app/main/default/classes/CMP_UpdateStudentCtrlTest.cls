@@ -18,18 +18,21 @@ private class CMP_UpdateStudentCtrlTest {
         Student__c result = CMP_UpdateStudentCtrl.getStudentByID(student.Id);
         Test.stopTest();
 
-        System.assertEquals(student.Id, result.Id);
+        Assert.areEqual(student.FirstName__c, result.FirstName__c);
     }
 
     @isTest
     private static void testGetStudentByID_Exception() {
+        Boolean error = false;
         Test.startTest();
         try {
             Student__c result = CMP_UpdateStudentCtrl.getStudentByID('invalidId');
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+        
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -52,7 +55,7 @@ private class CMP_UpdateStudentCtrlTest {
         Test.stopTest();
 
         Student__c result = [SELECT Id, FirstName__c FROM Student__c WHERE Id =: student.Id];
-        System.assertEquals('Phuc', result.FirstName__c);
+        Assert.areEqual('Phuc', result.FirstName__c);
     }
 
     @IsTest
@@ -70,13 +73,16 @@ private class CMP_UpdateStudentCtrlTest {
         insert student;
         student.FirstName__c = '';
 
+        Boolean error = false;
         Test.startTest();
         try {
             CMP_UpdateStudentCtrl.updateStudent(student);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -94,13 +100,16 @@ private class CMP_UpdateStudentCtrlTest {
         insert student;
         student.LastName__c = '';
         
+        Boolean error = false;
         Test.startTest();
         try {
             CMP_UpdateStudentCtrl.updateStudent(student);
         } catch (Exception e) {
-            System.assert(true, e.getMessage());
+            error = true;
         }
         Test.stopTest();
+
+        Assert.isTrue(error);
     }
 
     @IsTest
@@ -108,6 +117,6 @@ private class CMP_UpdateStudentCtrlTest {
         Test.startTest();
         CMP_UpdateStudentCtrl ctrl = new CMP_UpdateStudentCtrl();
         Test.stopTest();
-        System.assert(true);
+        Assert.isTrue(true);
     }
 }

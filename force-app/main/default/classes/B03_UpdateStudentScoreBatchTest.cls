@@ -51,9 +51,9 @@ private class B03_UpdateStudentScoreBatchTest {
         Test.stopTest();
 
         Batchlog__c log = [SELECT Id, Result__c FROM Batchlog__c WHERE Name = 'B03_学生得点更新バッチ' LIMIT 1];
-        System.assertEquals('Success', log.Result__c);
+        Assert.areEqual('Success', log.Result__c);
         student = [SELECT Id, GPAScore__c FROM Student__c WHERE Id =: student.Id];
-        System.assertEquals(8.79, student.GPAScore__c);
+        Assert.areEqual(8.79, student.GPAScore__c);
     }
 
     @IsTest 
@@ -65,7 +65,7 @@ private class B03_UpdateStudentScoreBatchTest {
         Test.stopTest();
 
         Batchlog__c log = [SELECT Id, Result__c, ErrorMessage__c FROM Batchlog__c WHERE Name = 'B03_学生得点更新バッチ' LIMIT 1];
-        System.assertEquals('Error', log.Result__c);
-        System.assertEquals('Test error message', log.ErrorMessage__c);
+        Assert.areEqual('Error', log.Result__c);
+        Assert.areEqual('Test error message', log.ErrorMessage__c);
     }
 }

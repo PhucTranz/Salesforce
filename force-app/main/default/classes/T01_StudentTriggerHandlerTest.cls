@@ -21,7 +21,7 @@ private class T01_StudentTriggerHandlerTest {
         T01_StudentTriggerHandler.beforeInsertOrUpdate(students);
         Test.stopTest();
 
-        System.assert(!students[0].HasErrors());
+        Assert.isTrue(!students[0].HasErrors());
     }
 
     @IsTest
@@ -38,7 +38,7 @@ private class T01_StudentTriggerHandlerTest {
         T01_StudentTriggerHandler.beforeInsertOrUpdate(students);
         Test.stopTest();
 
-        System.assertEquals('値を入力してください: LastName__c, FirstName__c, Class_look__c, BirthDay__c, Gender__c', students[0].getErrors()[0].getMessage());
+        Assert.areEqual('値を入力してください: LastName__c, FirstName__c, Class_look__c, BirthDay__c, Gender__c', students[0].getErrors()[0].getMessage());
     }
 
     @IsTest
@@ -62,7 +62,7 @@ private class T01_StudentTriggerHandlerTest {
         T01_StudentTriggerHandler.beforeInsertOrUpdate(students);
         Test.stopTest();
 
-        System.assertEquals('学生の年齢が無効です。有効な年齢は18歳以上です。', students[0].getErrors()[0].getMessage());
+        Assert.areEqual('学生の年齢が無効です。有効な年齢は18歳以上です。', students[0].getErrors()[0].getMessage());
     }
 
     @IsTest
@@ -87,7 +87,7 @@ private class T01_StudentTriggerHandlerTest {
         Test.stopTest();
 
         Class__c updatedClass = [SELECT Id, NumberOfStudent__c FROM Class__c WHERE Id =: cl.Id];
-        System.assertEquals(10, updatedClass.NumberOfStudent__c);
+        Assert.areEqual(10, updatedClass.NumberOfStudent__c);
     }
 
     @IsTest
@@ -112,7 +112,7 @@ private class T01_StudentTriggerHandlerTest {
         Test.stopTest();
 
         Class__c updatedClass = [SELECT Id, NumberOfStudent__c FROM Class__c WHERE Id =: cl.Id];
-        System.assertEquals(0, updatedClass.NumberOfStudent__c);
+        Assert.areEqual(0, updatedClass.NumberOfStudent__c);
     }
 
     @IsTest
@@ -146,8 +146,8 @@ private class T01_StudentTriggerHandlerTest {
         Test.stopTest();
 
         List<Class__c> updatedClasses = [SELECT Id, NumberOfStudent__c FROM Class__c WHERE Id IN :classes];
-        System.assertEquals(0, updatedClasses[0].NumberOfStudent__c);
-        System.assertEquals(3, updatedClasses[1].NumberOfStudent__c);
+        Assert.areEqual(0, updatedClasses[0].NumberOfStudent__c);
+        Assert.areEqual(3, updatedClasses[1].NumberOfStudent__c);
     }
 
     @IsTest
@@ -179,6 +179,6 @@ private class T01_StudentTriggerHandlerTest {
         Test.stopTest();
 
         List<SubjectScore__c> result = [SELECT Id FROM SubjectScore__c WHERE Student_look__c IN :students];
-        System.assertEquals(0, result.size());
+        Assert.areEqual(0, result.size());
     }
 }

@@ -22,7 +22,7 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByName": "Student"}');
         Test.stopTest();
 
-        System.assertEquals(10, listStudent.size()); 
+        Assert.areEqual(10, listStudent.size()); 
     }
 
     @IsTest
@@ -47,11 +47,8 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByClass": "'+cl.Id+'"}');
         Test.stopTest();
 
-        if (listStudent.size() > 0) {
-            System.assertEquals(cl.Id, listStudent.get(0).Class_look__c); 
-        } else {
-            System.assert(false);
-        } 
+        Assert.areEqual(10, listStudent.size());
+        Assert.areEqual(cl.Id, listStudent.get(0).Class_look__c); 
     }
 
     @IsTest
@@ -78,11 +75,8 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByStudentCode": "'+students[0].StudentCode__c+'"}');
         Test.stopTest();
 
-        if (listStudent.size() > 0) {
-            System.assertEquals(students[0].StudentCode__c, listStudent.get(0).StudentCode__c); 
-        } else {
-            System.assert(false);
-        }
+        Assert.areEqual(1, listStudent.size());
+        Assert.areEqual(students[0].StudentCode__c, listStudent.get(0).StudentCode__c); 
     }
 
     @IsTest
@@ -118,7 +112,7 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByGender": "Male"}');
         Test.stopTest();
 
-        System.assertEquals(3, listStudent.size()); 
+        Assert.areEqual(3, listStudent.size()); 
     }
 
     @IsTest
@@ -154,7 +148,7 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByBirthday": "2003-11-23"}');
         Test.stopTest();
 
-        System.assertEquals(7, listStudent.size()); 
+        Assert.areEqual(7, listStudent.size()); 
     }
 
     @IsTest
@@ -190,7 +184,7 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByYear": 2003}');
         Test.stopTest();
 
-        System.assertEquals(7, listStudent.size()); 
+        Assert.areEqual(7, listStudent.size()); 
     }
 
     @IsTest
@@ -226,7 +220,7 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByMonth": 11}');
         Test.stopTest();
 
-        System.assertEquals(3, listStudent.size()); 
+        Assert.areEqual(3, listStudent.size()); 
     }
 
     @IsTest
@@ -262,7 +256,7 @@ private class LWC_SearchStudentCtrlTest {
         List<Student__c> listStudent= LWC_SearchStudentCtrl.searchCondition('{"searchByDay": 2}');
         Test.stopTest();
 
-        System.assertEquals(3, listStudent.size()); 
+        Assert.areEqual(3, listStudent.size()); 
     }
 
     @IsTest
@@ -276,10 +270,9 @@ private class LWC_SearchStudentCtrlTest {
         List<Class__c> result = LWC_SearchStudentCtrl.getListClass();
         Test.stopTest();
 
-        System.assertEquals(2, result.size());
-        for (Integer i = 0; i < classes.size(); i++) {
-            System.assertEquals(classes.get(i).Id, result.get(i).Id);
-        }
+        classes = [SELECT Id FROM Class__c ORDER BY ClassCode__c ASC];
+        Assert.areEqual(classes.size(), result.size());
+        Assert.areEqual(classes[1].Id, result[1].Id);
     }
 
     @IsTest
@@ -310,6 +303,6 @@ private class LWC_SearchStudentCtrlTest {
         Test.stopTest();
 
         List<Student__c> result = [SELECT Id FROM Student__c];
-        System.assertEquals(0, result.size());
+        Assert.areEqual(0, result.size());
     }
 }

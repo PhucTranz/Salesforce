@@ -23,7 +23,7 @@ private class VF_DetailStudentCtrlTest {
         Test.stopTest();
 
         testClass = [SELECT Id, Name FROM Class__c WHERE Id =: testClass.Id];
-        System.assertEquals(student.Id, ctrl.student.Id, 'Student Id should match');
-        System.assertEquals(testClass.Name, ctrl.className, 'Class name should match');
+        Assert.areEqual(student.Id, ctrl.student.Id, 'Student Id should match');
+        Assert.areEqual(testClass.Name, ctrl.className, 'Class name should match');
     }
 }

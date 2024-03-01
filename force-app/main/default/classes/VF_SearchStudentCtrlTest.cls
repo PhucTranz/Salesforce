@@ -25,8 +25,8 @@ private class VF_SearchStudentCtrlTest {
         controller.search();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @isTest
@@ -54,9 +54,9 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(1, controller.totalRecords, 'Total records should match');
-        System.assertEquals(1, controller.totalPages, 'Total pages should match');
-        System.assertEquals(testStudents[2].Id, controller.students[0].Id, 'Student should match');
+        Assert.areEqual(1, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(1, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(testStudents[2].Id, controller.students[0].Id, 'Student should match');
     }
 
     @isTest
@@ -83,8 +83,8 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @isTest
@@ -111,8 +111,8 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @isTest
@@ -139,8 +139,8 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @isTest
@@ -167,8 +167,8 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @isTest
@@ -195,8 +195,8 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @isTest
@@ -223,8 +223,8 @@ private class VF_SearchStudentCtrlTest {
         controller.loadData();
         Test.stopTest();
 
-        System.assertEquals(10, controller.totalRecords, 'Total records should match');
-        System.assertEquals(2, controller.totalPages, 'Total pages should match');
+        Assert.areEqual(10, controller.totalRecords, 'Total records should match');
+        Assert.areEqual(2, controller.totalPages, 'Total pages should match');
     }
 
     @IsTest
@@ -255,7 +255,7 @@ private class VF_SearchStudentCtrlTest {
             }
         }
 
-        System.assertEquals(6, count);
+        Assert.areEqual(6, count);
     }
 
     @IsTest
@@ -287,7 +287,7 @@ private class VF_SearchStudentCtrlTest {
             }
         }
 
-        System.assertEquals(6, count);
+        Assert.areEqual(6, count);
     }
 
     @IsTest
@@ -319,7 +319,7 @@ private class VF_SearchStudentCtrlTest {
             }
         }
 
-        System.assertEquals(7, count);
+        Assert.areEqual(7, count);
     }
 
     @IsTest
@@ -351,7 +351,7 @@ private class VF_SearchStudentCtrlTest {
             }
         }
 
-        System.assertEquals(11, count);
+        Assert.areEqual(11, count);
     }
 
     @IsTest
@@ -383,7 +383,7 @@ private class VF_SearchStudentCtrlTest {
             }
         }
 
-        System.assertEquals(11, count);
+        Assert.areEqual(11, count);
     }
 
     @IsTest
@@ -407,8 +407,8 @@ private class VF_SearchStudentCtrlTest {
         Test.stopTest();
 
         testClass = [SELECT Id, Name FROM Class__c WHERE Id =: testClass.Id];
-        System.assertEquals(student.Id, ctrl.student.Id, 'Student Id should match');
-        System.assertEquals(testClass.Name, ctrl.className, 'Class name should match');
+        Assert.areEqual(student.Id, ctrl.student.Id, 'Student Id should match');
+        Assert.areEqual(testClass.Name, ctrl.className, 'Class name should match');
     }
 
     @IsTest
@@ -418,7 +418,7 @@ private class VF_SearchStudentCtrlTest {
         ctrl.setStudent();
         Test.stopTest();
         
-        System.assertEquals(null, ctrl.student.FirstName__c, 'Student Id should match');
+        Assert.areEqual(null, ctrl.student.FirstName__c, 'Student Id should match');
     }
 
     @IsTest
@@ -434,10 +434,10 @@ private class VF_SearchStudentCtrlTest {
         Test.stopTest();
 
         listClass = [SELECT Id, Name FROM Class__c];
-        System.assertEquals(listClass.size() + 1, listSelectOptions.size(), 'Number of options should match number of test classes');
+        Assert.areEqual(listClass.size() + 1, listSelectOptions.size(), 'Number of options should match number of test classes');
         for (Integer i = 1; i < listSelectOptions.size(); i++) {
-            System.assertEquals(listClass[i-1].Id, listSelectOptions[i].getValue(), 'Option value should match class Id');
-            System.assertEquals(listClass[i-1].Name, listSelectOptions[i].getLabel(), 'Option label should match class Name');
+            Assert.areEqual(listClass[i-1].Id, listSelectOptions[i].getValue(), 'Option value should match class Id');
+            Assert.areEqual(listClass[i-1].Name, listSelectOptions[i].getLabel(), 'Option label should match class Name');
         }
     }
 
@@ -448,7 +448,7 @@ private class VF_SearchStudentCtrlTest {
         List<SelectOption> listGenderOptions = ctrl.getGenderOptions();
         Test.stopTest();
 
-        System.assertEquals(3, listGenderOptions.size(), 'Number of options should match number of test classes');
+        Assert.areEqual(3, listGenderOptions.size(), 'Number of options should match number of test classes');
     }
 
     @IsTest
@@ -459,8 +459,8 @@ private class VF_SearchStudentCtrlTest {
         PageReference page = ctrl.getFirstPage();
         Test.stopTest();
 
-        System.assertEquals(1, ctrl.pageNumber);
-        System.assertEquals(null, page);
+        Assert.areEqual(1, ctrl.pageNumber);
+        Assert.areEqual(null, page);
     }
 
     @IsTest
@@ -472,8 +472,8 @@ private class VF_SearchStudentCtrlTest {
         PageReference page = ctrl.handlePreviousPage();
         Test.stopTest();
 
-        System.assertEquals(2, ctrl.pageNumber);
-        System.assertEquals(null, page);
+        Assert.areEqual(2, ctrl.pageNumber);
+        Assert.areEqual(null, page);
     }
 
     @IsTest
@@ -485,8 +485,8 @@ private class VF_SearchStudentCtrlTest {
         PageReference page = ctrl.handleNextPage();
         Test.stopTest();
 
-        System.assertEquals(4, ctrl.pageNumber);
-        System.assertEquals(null, page);
+        Assert.areEqual(4, ctrl.pageNumber);
+        Assert.areEqual(null, page);
     }
 
     @IsTest
@@ -498,8 +498,8 @@ private class VF_SearchStudentCtrlTest {
         PageReference page = ctrl.getlastPage();
         Test.stopTest();
 
-        System.assertEquals(3, ctrl.pageNumber);
-        System.assertEquals(null, page);
+        Assert.areEqual(3, ctrl.pageNumber);
+        Assert.areEqual(null, page);
     }
 
     @IsTest
@@ -511,7 +511,7 @@ private class VF_SearchStudentCtrlTest {
         PageReference page = ctrl.moveToPage();
         Test.stopTest();
 
-        System.assertEquals(null, page);
+        Assert.areEqual(null, page);
     }
 
     @IsTest
@@ -522,7 +522,7 @@ private class VF_SearchStudentCtrlTest {
         ctrl.pageNumber = 3;
         Test.stopTest();
 
-        System.assertEquals(true, ctrl.hasPreviousPage);
+        Assert.areEqual(true, ctrl.hasPreviousPage);
     }
 
     @IsTest
@@ -533,7 +533,7 @@ private class VF_SearchStudentCtrlTest {
         ctrl.pageNumber = 1;
         Test.stopTest();
 
-        System.assertEquals(false, ctrl.hasPreviousPage);
+        Assert.areEqual(false, ctrl.hasPreviousPage);
     }
 
     @IsTest
@@ -555,7 +555,7 @@ private class VF_SearchStudentCtrlTest {
         ctrl.createStudent();
         Test.stopTest();
 
-        System.assertEquals(student.Id, ctrl.students[0].Id);
+        Assert.areEqual(student.Id, ctrl.students[0].Id);
     }
 
     @IsTest
@@ -575,7 +575,7 @@ private class VF_SearchStudentCtrlTest {
         ctrl.createStudent();
         Test.stopTest();
         
-        System.assertEquals(0, ctrl.students.size());
+        Assert.areEqual(0, ctrl.students.size());
     }
 
     
@@ -601,9 +601,9 @@ private class VF_SearchStudentCtrlTest {
 
         List<ApexPages.Message> messages = ApexPages.getMessages();
         try {
-            System.assertEquals('Update successful', messages.get(0).getSummary());
+            Assert.areEqual('Update successful', messages.get(0).getSummary());
         } catch (Exception e) {
-            throw e;
+            Assert.isTrue(false);
         }
     }
 
@@ -628,9 +628,9 @@ private class VF_SearchStudentCtrlTest {
 
         List<ApexPages.Message> messages = ApexPages.getMessages();
         try {
-            System.assertNotEquals('Update successful', messages.get(0).getSummary());
+            Assert.areNotEqual('Update successful', messages.get(0).getSummary());
         } catch (Exception e) {
-            throw e;
+            Assert.isTrue(false);
         }
     }
 
@@ -656,9 +656,9 @@ private class VF_SearchStudentCtrlTest {
 
         List<ApexPages.Message> messages = ApexPages.getMessages();
         try {
-            System.assertEquals('Delete successful', messages.get(0).getSummary());
+            Assert.areEqual('Delete successful', messages.get(0).getSummary());
         } catch (Exception e) {
-            throw e;
+            Assert.isTrue(false);
         }
     }
 
@@ -683,9 +683,9 @@ private class VF_SearchStudentCtrlTest {
 
         List<ApexPages.Message> messages = ApexPages.getMessages();
         try {
-            System.assertNotEquals('Delete successful', messages.get(0).getSummary());
+            Assert.areNotEqual('Delete successful', messages.get(0).getSummary());
         } catch (Exception e) {
-            throw e;
+            Assert.isTrue(false);
         }
     }
 
@@ -716,13 +716,13 @@ private class VF_SearchStudentCtrlTest {
         Test.stopTest();
 
         students = [SELECT Id FROM Student__c];
-        System.assertEquals(0, students.size());
+        Assert.areEqual(0, students.size());
 
         List<ApexPages.Message> messages = ApexPages.getMessages();
         try {
-            System.assertEquals('Delete successful', messages.get(0).getSummary());
+            Assert.areEqual('Delete successful', messages.get(0).getSummary());
         } catch (Exception e) {
-            throw e;
+            Assert.isTrue(false);
         }
     }
 
@@ -749,10 +749,7 @@ private class VF_SearchStudentCtrlTest {
         ctrl.selectAllStudent();
         Test.stopTest();
 
-        for (String key : ctrl.selectedStudent.keySet()) {
-            System.assertEquals(true, ctrl.selectedStudent.get(key));
-        }
-        System.assertEquals(5, ctrl.countSelected);
+        Assert.areEqual(5, ctrl.countSelected);
     }
 
     @IsTest
@@ -782,9 +779,9 @@ private class VF_SearchStudentCtrlTest {
         Test.stopTest();
 
         for (String key : ctrl.selectedStudent.keySet()) {
-            System.assertEquals(false, ctrl.selectedStudent.get(key));
+            Assert.areEqual(false, ctrl.selectedStudent.get(key));
         }
-        System.assertEquals(0, ctrl.countSelected);
+        Assert.areEqual(0, ctrl.countSelected);
     }
 
     @IsTest
@@ -813,6 +810,6 @@ private class VF_SearchStudentCtrlTest {
         ctrl.selectStudent();
         Test.stopTest();
         
-        System.assertEquals(false, ctrl.selectedStudent.get(students[0].StudentCode__c));
+        Assert.areEqual(false, ctrl.selectedStudent.get(students[0].StudentCode__c));
     }
 }

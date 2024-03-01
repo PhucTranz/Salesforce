@@ -15,9 +15,9 @@ private class B01_DeleteSubjectScoreBatchTest {
         Test.stopTest();
 
         subjectScores = [SELECT Id FROM SubjectScore__c];
-        System.assertEquals(0, subjectScores.size());
+        Assert.areEqual(0, subjectScores.size());
         Batchlog__c log = [SELECT Id, Result__c FROM Batchlog__c WHERE Name = 'B01_科目得点削除バッチ' LIMIT 1];
-        System.assertEquals('Success', log.Result__c);
+        Assert.areEqual('Success', log.Result__c);
     }
 
     @IsTest 
@@ -29,7 +29,7 @@ private class B01_DeleteSubjectScoreBatchTest {
         Test.stopTest();
 
         Batchlog__c log = [SELECT Id, Result__c, ErrorMessage__c FROM Batchlog__c WHERE Name = 'B01_科目得点削除バッチ' LIMIT 1];
-        System.assertEquals('Error', log.Result__c);
-        System.assertEquals('Test error message', log.ErrorMessage__c);
+        Assert.areEqual('Error', log.Result__c);
+        Assert.areEqual('Test error message', log.ErrorMessage__c);
     }
 }

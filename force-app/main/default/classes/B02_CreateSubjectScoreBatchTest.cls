@@ -34,6 +34,6 @@ private class B02_CreateSubjectScoreBatchTest {
         Test.stopTest();
 
         Batchlog__c log = [SELECT Id, Result__c FROM Batchlog__c WHERE Name = 'B02_科目得点作成バッチ' LIMIT 1];
-        System.assertEquals('Success', log.Result__c);
+        Assert.areEqual('Success', log.Result__c);
     }
 }
