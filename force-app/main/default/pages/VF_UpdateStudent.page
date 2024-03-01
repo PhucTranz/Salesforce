@@ -1,3 +1,11 @@
+<!--
+/**
+* クラス名：VF_UpdateStudent
+* クラス概要：update student page
+* @created： 2023/11/14 Tran Dinh Phuc
+* @modified：
+*/
+-->
 <apex:page controller="VF_UpdateStudentCtrl">
   <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"/>
     <apex:stylesheet value="{!$Resource.SchoolProject_student}" />

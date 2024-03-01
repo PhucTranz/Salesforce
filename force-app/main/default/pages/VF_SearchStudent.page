@@ -1,3 +1,11 @@
+<!--
+/**
+* クラス名：VF_SearchStudent
+* クラス概要：search student page
+* @created： 2023/11/14 Tran Dinh Phuc
+* @modified：
+*/
+-->
 <apex:page controller="VF_SearchStudentCtrl" lightningStylesheets="True" docType="html-5.0">
     <html>
     <head>
