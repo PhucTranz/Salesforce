@@ -1,3 +1,9 @@
+/**
+* クラス名：LWC_UpdateStudent
+* クラス概要：update student
+* @created： 2024/01/11 Tran Dinh Phuc
+* @modified：
+*/
 import { api, track } from 'lwc';
 import LightningModal from 'lightning/modal';
 import getStudentByID from '@salesforce/apex/LWC_UpdateStudentCtrl.getStudentByID';

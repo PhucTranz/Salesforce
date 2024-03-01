@@ -1,3 +1,9 @@
+/**
+* クラス名：LWC_DetailStudent
+* クラス概要：detail student
+* @created： 2024/01/12 Tran Dinh Phuc
+* @modified：
+*/
 import { api, track } from 'lwc';
 import LightningModal from 'lightning/modal';
 import getStudentByID from '@salesforce/apex/LWC_DetailStudentCtrl.getStudentByID';

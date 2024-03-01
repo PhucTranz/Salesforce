@@ -1,3 +1,9 @@
+/**
+* クラス名：LWC_CreateStudent
+* クラス概要：create student
+* @created： 2024/01/11 Tran Dinh Phuc
+* @modified：
+*/
 import { api } from 'lwc';
 import LightningModal from 'lightning/modal';
 import createStudent from '@salesforce/apex/LWC_CreateStudentCtrl.createStudent';

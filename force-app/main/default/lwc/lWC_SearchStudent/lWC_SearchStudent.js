@@ -1,3 +1,9 @@
+/**
+* クラス名：LWC_SearchStudent
+* クラス概要：search student
+* @created： 2024/01/08 Tran Dinh Phuc
+* @modified：
+*/
 import { LightningElement, track, wire } from 'lwc';
 import searchCondition from '@salesforce/apex/LWC_SearchStudentCtrl.searchCondition';
 import getListClass from '@salesforce/apex/LWC_SearchStudentCtrl.getListClass';

@@ -1,3 +1,9 @@
+/**
+* クラス名：LWC_ScoreTable
+* クラス概要：Scoretable
+* @created： 2024/01/30 Tran Dinh Phuc
+* @modified：
+*/
 import { api, track, LightningElement } from 'lwc';
 import getSubjectScore from '@salesforce/apex/LWC_DetailStudentCtrl.getSubjectScore';
 
