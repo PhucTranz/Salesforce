@@ -1,3 +1,11 @@
+<!--
+/**
+* クラス名：CMP_ScoreTable
+* クラス概要：Scoretable
+* @created： 2024/01/08 Tran Dinh Phuc
+* @modified：
+*/
+-->
 <aura:component controller="CMP_DetailStudentCtrl">
     <aura:attribute name="student" type="Student__c"/>
     <aura:attribute name="semesterOptions" type="List" />

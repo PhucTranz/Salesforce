@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_SearchResultController
+* クラス概要：Search result controller
+* @created： 2024/01/03 Tran Dinh Phuc
+* @modified：
+*/
 ({
     receiveData : function(component, event, helper) {
         helper.doInit(component, event);

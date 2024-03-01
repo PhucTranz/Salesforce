@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_SearchConditionHelper
+* クラス概要：Search condition helper
+* @created： 2024/01/03 Tran Dinh Phuc
+* @modified：
+*/
 ({
     getStudents : function(component, isReload) {
         var action = component.get('c.getAllStudent');

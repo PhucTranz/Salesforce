@@ -1,3 +1,11 @@
+<!--
+/**
+* クラス名：CMP_SearchResult
+* クラス概要：search result
+* @created： 2024/01/03 Tran Dinh Phuc
+* @modified：
+*/
+-->
 <aura:component controller="CMP_SearchStudentCtrl" >
     <aura:attribute name="students" type="Student__c[]"/>
     <aura:attribute name="studentsToTable" type="Student__c[]"/>

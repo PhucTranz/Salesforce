@@ -1,3 +1,11 @@
+<!--
+/**
+* クラス名：CMP_SearchStudent
+* クラス概要：search Student
+* @created： 2023/12/26 Tran Dinh Phuc
+* @modified：
+*/
+-->
 <aura:component controller="CMP_SearchStudentCtrl" implements="flexipage:availableForAllPageTypes">
     <aura:dependency resource="markup://force:showToast" type="EVENT,COMPONENT" />  
     <div class="slds-box slds-theme_default">

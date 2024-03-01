@@ -1,3 +1,11 @@
+<!--
+/**
+* クラス名：CMP_SearchCondition
+* クラス概要：Search condition
+* @created： 2024/01/03 Tran Dinh Phuc
+* @modified：
+*/
+-->
 <aura:component controller="CMP_SearchStudentCtrl" >
     <aura:attribute name="searchByName" type="String"/>
     <aura:attribute name="searchByClass" type="String"/>

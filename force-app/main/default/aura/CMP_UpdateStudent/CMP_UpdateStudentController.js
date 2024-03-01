@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_UpdateStudentController
+* クラス概要：Update student controller
+* @created： 2023/12/28 Tran Dinh Phuc
+* @modified：
+*/
 ({
     getEditModal: function(component, event, helper) {
         helper.doInit(component,event);

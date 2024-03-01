@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_SearchConditionController
+* クラス概要：search student controller
+* @created： 2024/01/03 Tran Dinh Phuc
+* @modified：
+*/
 ({
     doInit : function(component, event, helper) {
         helper.getStudents(component, true);

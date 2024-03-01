@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_UpdateStudentHelper
+* クラス概要：Update student helper
+* @created： 2023/12/28 Tran Dinh Phuc
+* @modified：
+*/
 ({
     doInit : function(component, event) {
         var action = component.get('c.getStudentByID');

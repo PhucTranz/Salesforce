@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_SearchResultHelper
+* クラス概要：Search result helper
+* @created： 2024/01/03 Tran Dinh Phuc
+* @modified：
+*/
 ({
     doInit :  function(component, event) {
         var students = event.getParam("students");

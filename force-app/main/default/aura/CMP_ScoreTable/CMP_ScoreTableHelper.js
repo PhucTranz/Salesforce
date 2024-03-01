@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_ScoreTableHelper
+* クラス概要：Scoretable helper
+* @created： 2024/01/08 Tran Dinh Phuc
+* @modified：
+*/
 ({
     doInit : function(component) {
         var student = component.get('v.student');

@@ -1,3 +1,9 @@
+/**
+* クラス名：CMP_ScoreTableController
+* クラス概要：Scoretable controller
+* @created： 2024/01/08 Tran Dinh Phuc
+* @modified：
+*/
 ({
     doInit : function(component, event, helper) {
         helper.doInit(component)
